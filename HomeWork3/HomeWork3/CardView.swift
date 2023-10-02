@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class CardView: UIView {
-    private let image = UIImageView(image: UIImage(named: "cat.png"))
+    private let image = UIImageView(image: UIImage(named: "cat"))
     private let label1 = UILabel()
     private let label2 = UILabel()
     
