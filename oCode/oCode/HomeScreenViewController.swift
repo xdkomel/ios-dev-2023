@@ -11,7 +11,6 @@ import CoreData
 
 class HomeScreenViewController: UIViewController {
     let list = ListController()
-    let cellIdentifier = "cell_identifier"
     let coreDataContext = (UIApplication.shared.delegate as! AppDelegate)
         .persistentContainer
         .viewContext
@@ -49,7 +48,18 @@ class HomeScreenViewController: UIViewController {
             return program
         }
         list.onListElementTap = { [weak self] program in
-            self?.navigationController?.pushViewController(ProgramViewController(), animated: true)
+            self?.navigationController?.pushViewController(
+                ProgramViewController(
+                    programCode: program.code ?? "print(int(input()))",
+                    programInput: program.input,
+                    programName: program.name ?? "Untitled",
+                    programTarget: .init(
+                        compilerName: program.language?.tag ?? "py",
+                        fullName: program.language?.fullName ?? "Python"
+                    )
+                ),
+                animated: true
+            )
         }
         view.addSubview(list.collectionView)
         list.collectionView.snp.makeConstraints { make in

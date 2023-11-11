@@ -13,19 +13,53 @@ import Combine
 class ProgramViewController: UIViewController {
     // UI
     private let codeField = UITextField()
-    private let runButton = UIButton()
     private let outputText = UILabel()
     // Business
     private let compilerApi = MoyaProvider<Compiler>()
     private var subsctiptions = Set<AnyCancellable>()
-    private var viewModel = ProgramViewModel()
+    private var viewModel: ProgramViewModel
+    // Program model
+    private let programCode: String
+    private let programInput: String?
+    private let programName: String
+    private let programTarget: TargetLanguage
+    
+    init(
+        programCode: String,
+        programInput: String?,
+        programName: String,
+        programTarget: TargetLanguage
+    ) {
+        self.programCode = programCode
+        self.programInput = programInput
+        self.programName = programName
+        self.programTarget = programTarget
+        viewModel = .init(
+            name: programName,
+            code: programCode,
+            target: programTarget,
+            input: programInput
+        )
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        codeField.text = "print(int(input()) + 1)"
-        runButton.setTitle("Run", for: .normal)
-        runButton.addTarget(self, action: #selector(self.onRunCode), for: .touchUpInside)
+        view.backgroundColor = .systemBackground
+        title = programName
+        let runButton = UIBarButtonItem(
+            title: "Run",
+            style: .done,
+            target: self,
+            action: #selector(onRunCode)
+        )
+        self.navigationItem.rightBarButtonItem = runButton
+        codeField.text = programCode
         outputText.text = "Default"
         
         setView()
@@ -34,19 +68,14 @@ class ProgramViewController: UIViewController {
     
     func setView() {
         view.addSubview(codeField)
-        view.addSubview(runButton)
         view.addSubview(outputText)
         
         codeField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        runButton.snp.makeConstraints { make in
-            make.top.equalTo(codeField.snp.bottom).inset(-16)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
         outputText.snp.makeConstraints { make in
-            make.top.equalTo(runButton.snp.bottom).inset(-16)
+            make.top.equalTo(codeField.snp.bottom).inset(-16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
@@ -60,6 +89,7 @@ class ProgramViewController: UIViewController {
                 self?.viewModel.code = text
             }
             .store(in: &subsctiptions)
+        
         
         // ViewModel -> View
         viewModel.$output

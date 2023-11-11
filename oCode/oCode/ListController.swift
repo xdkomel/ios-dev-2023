@@ -35,7 +35,7 @@ final class ListController: UICollectionViewController {
 
         return UICollectionViewDiffableDataSource<Section, ProgramDataModel>(
             collectionView: collectionView
-        ) { (collectionView, indexPath, country) -> UICollectionViewCell? in
+        ) { collectionView, indexPath, country -> UICollectionViewCell? in
             collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
