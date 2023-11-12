@@ -30,13 +30,13 @@ class ProgramRunModalViewController: UIViewController {
         view.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Close",
+            title: NSLocalizedString("program.close-button", comment: ""),
             style: .plain,
             target: self,
             action: #selector(close)
         )
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Run",
+            title: NSLocalizedString("program.run-button", comment: ""),
             style: .done,
             target: self,
             action: #selector(runCode)
@@ -45,6 +45,7 @@ class ProgramRunModalViewController: UIViewController {
         inputField.borderStyle = .roundedRect
         inputField.text = viewModel.input
         outputText.textAlignment = .center
+        outputText.numberOfLines = 3
         setView()
         setBinding()
         super.viewWillAppear(animated)
@@ -80,25 +81,29 @@ class ProgramRunModalViewController: UIViewController {
             .sink { [ weak self ] output in
                 switch output {
                 case let .oldEmpty(oldResult):
-                    self?.outputText.text = "The last output was \(oldResult)"
+                    self?.outputText.text = "\(NSLocalizedString("program.last-output", comment: "")) \(self?.filterOutput(oldResult) ?? oldResult)"
                     self?.outputText.textColor = .secondaryLabel
                 case .empty:
-                    self?.outputText.text = "Enter some input text and press run"
+                    self?.outputText.text = NSLocalizedString("program.enter-input", comment: "")
                     self?.outputText.textColor = .secondaryLabel
                 case .loading:
-                    self?.outputText.text = "Loading..."
+                    self?.outputText.text = NSLocalizedString("program.loading", comment: "")
                     self?.outputText.textColor = .secondaryLabel
                 case let .error(description):
                     self?.outputText.text = description
                     self?.outputText.textColor = .systemRed
                 case let .data(output):
-                    self?.outputText.text = output.isEmpty ?
-                        "[empty output]" :
-                        output
+                    self?.outputText.text = self?.filterOutput(output) ?? output
                     self?.outputText.textColor = .label
                 }
             }
             .store(in: &subscriptions)
+    }
+    
+    private func filterOutput(_ output: String) -> String {
+        output.isEmpty ?
+            NSLocalizedString("program.empty-output", comment: "") :
+            output
     }
     
     @objc private func runCode() {

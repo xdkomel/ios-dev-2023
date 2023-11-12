@@ -40,7 +40,7 @@ class HomeScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Programs"
+        title = NSLocalizedString("homescreen.title", comment: "")
         view.backgroundColor = .systemBackground
         list.collectionView = UICollectionView(
             frame: view.bounds,
@@ -74,7 +74,7 @@ class HomeScreenViewController: UIViewController {
     }
     
     func setErrorView() {
-        label.text = "An error happened"
+        label.text = NSLocalizedString("homescreen.error", comment: "")
         label.font = .preferredFont(forTextStyle: .title1)
         label.textAlignment = .center
         label.textColor = .secondaryLabel
@@ -86,11 +86,11 @@ class HomeScreenViewController: UIViewController {
     }
     
     func setInitialView() {
-        label.text = "You have no programs"
+        label.text = NSLocalizedString("homescreen.no-programs", comment: "")
         label.font = .preferredFont(forTextStyle: .title1)
         label.textColor = .secondaryLabel
         label.textAlignment = .center
-        button.setTitle("Create", for: .normal)
+        button.setTitle(NSLocalizedString("homescreen.create-button", comment: ""), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(createNewProgram), for: .touchUpInside)
         
@@ -109,7 +109,7 @@ class HomeScreenViewController: UIViewController {
     
     func setListView(_ programs: [ProgramDataModel]) {
         self.navigationItem.rightBarButtonItem = .init(
-            title: "New",
+            title: NSLocalizedString("homescreen.new-button", comment: ""),
             style: .done,
             target: self,
             action: #selector(createNewProgram)

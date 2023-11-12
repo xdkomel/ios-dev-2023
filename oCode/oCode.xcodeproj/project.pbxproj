@@ -13,6 +13,7 @@
 		8E4DD7492B00DDDD00EF9FEB /* ProgramRunModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD7482B00DDDD00EF9FEB /* ProgramRunModalViewController.swift */; };
 		8E4DD74B2B010D8C00EF9FEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD74A2B010D8C00EF9FEB /* Storage.swift */; };
 		8E4DD74D2B015D7B00EF9FEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD74A2B010D8C00EF9FEB /* Storage.swift */; };
+		8E4DD7522B018E5C00EF9FEB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DD7512B018E5C00EF9FEB /* Localizable.xcstrings */; };
 		8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B482AFBC68E0042A87F /* AppDelegate.swift */; };
 		8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */; };
 		8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */; };
@@ -61,6 +62,7 @@
 		8E4DD7432B000CFD00EF9FEB /* ListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		8E4DD7482B00DDDD00EF9FEB /* ProgramRunModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramRunModalViewController.swift; sourceTree = "<group>"; };
 		8E4DD74A2B010D8C00EF9FEB /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		8E4DD7512B018E5C00EF9FEB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8EE41B452AFBC68E0042A87F /* oCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE41B482AFBC68E0042A87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		8EE41B3C2AFBC68E0042A87F = {
 			isa = PBXGroup;
 			children = (
+				8E4DD7512B018E5C00EF9FEB /* Localizable.xcstrings */,
 				8EE41B472AFBC68E0042A87F /* oCode */,
 				8EE41B612AFBC6900042A87F /* oCodeTests */,
 				8EE41B6B2AFBC6900042A87F /* oCodeUITests */,
@@ -325,6 +328,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 8EE41B3C2AFBC68E0042A87F;
 			packageReferences = (
@@ -348,6 +352,7 @@
 			files = (
 				8EE41B582AFBC6900042A87F /* LaunchScreen.storyboard in Resources */,
 				8EE41B552AFBC6900042A87F /* Assets.xcassets in Resources */,
+				8E4DD7522B018E5C00EF9FEB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
