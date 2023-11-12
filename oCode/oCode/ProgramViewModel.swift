@@ -11,6 +11,7 @@ import Moya
 
 enum OutputState {
     case empty
+    case oldEmpty(oldResult: String)
     case loading
     case error(description: String)
     case data(output: String)
@@ -21,8 +22,8 @@ final class ProgramViewModel {
     @Published var code: String
     @Published var target: TargetLanguage
     @Published var input: String?
-    @Published private(set) var output: OutputState = .empty
-    @Published private(set) var untouched = true
+    @Published var output: OutputState = .empty
+    @Published var untouched = true
     private var bindings = Set<AnyCancellable>()
     private let compilerApi = MoyaProvider<Compiler>()
     
