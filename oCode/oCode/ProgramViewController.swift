@@ -104,7 +104,7 @@ class ProgramViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
-        // Highlight the text
+        // Highlight the text on change
         codeText.textPublisher
             .receive(on: RunLoop.main)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
@@ -114,15 +114,26 @@ class ProgramViewController: UIViewController {
             .store(in: &subscriptions)
     }
     
+    func highlightExistingText() {
+        highlightText(codeText.text)
+    }
+    
     func highlightText(_ text: String) {
         _Concurrency.Task {
             let cursor = codeText.selectedRange
             let lastSymbol = text.last
+            let style: HighlightStyle = view
+                .window?
+                .windowScene?
+                .traitCollection
+                .userInterfaceStyle == .dark ?
+                    .dark(.google) :
+                    .light(.google)
             do {
-                var highlighted = try await Highlight.text(
+                let highlighted = try await Highlight.text(
                     text,
                     language: self.viewModel.target.compilerName, 
-                    style: .light(.google)
+                    style: style
                 ).attributed
                 let attributedString = NSMutableAttributedString(
                     highlighted.mergingAttributes(.init([
@@ -146,6 +157,15 @@ class ProgramViewController: UIViewController {
             }
         }
     }
+    
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            highlightExistingText()
+        }
+  }
     
     @objc func openModal() {
         self.navigationController?.present(
