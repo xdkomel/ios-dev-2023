@@ -15,28 +15,15 @@ class ProgramViewController: UIViewController {
     // UI
     private let codeText = UITextView()
     // Business
-    private let compilerApi = MoyaProvider<Compiler>()
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel: ProgramViewModel
+    private var programRunModal: ProgramRunModalViewController
     // Persistence
-    private let storage: Storage
-    private let program: ProgramDataModel
+    var onClose: (() -> Void)?
     
-    init(program: ProgramDataModel, storage: Storage) {
-        viewModel = .init(
-            name: program.name ?? "Program \(Int.random(in: 1...1000))",
-            code: program.code ?? "print(int(input()))",
-            target: .init(
-                compilerName: program.language?.tag ?? "py",
-                fullName: program.language?.fullName ?? "Python"
-            ),
-            input: program.input,
-            output: program.output == nil ?
-                .empty :
-                .oldEmpty(oldResult: program.output!)
-        )
-        self.program = program
-        self.storage = storage
+    init(viewModel: ProgramViewModel, programRunModal: ProgramRunModalViewController) {
+        self.viewModel = viewModel
+        self.programRunModal = programRunModal
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,22 +32,11 @@ class ProgramViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        program.name = viewModel.name
-        program.code = viewModel.code
-        program.language?.fullName = viewModel.target.fullName
-        program.language?.tag = viewModel.target.compilerName
-        program.input = viewModel.input
-        program.output = switch viewModel.output {
-        case .oldEmpty(let oldResult): oldResult
-        default: nil
-        }
-        storage.save()
+        onClose?()
         super.viewWillDisappear(animated)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .systemBackground
         self.navigationItem.titleView = {
             let title = UILabel()
@@ -86,6 +62,7 @@ class ProgramViewController: UIViewController {
         
         setView()
         setBindings()
+        super.viewWillAppear(animated)
     }
     
     func setView() {
@@ -136,12 +113,14 @@ class ProgramViewController: UIViewController {
                     style: style
                 ).attributed
                 let attributedString = NSMutableAttributedString(
-                    highlighted.mergingAttributes(.init([
-                        NSAttributedString.Key.font: UIFont.monospacedSystemFont(
-                            ofSize: 18,
-                            weight: .regular
-                        )
-                    ]))
+                    highlighted.mergingAttributes(
+                        .init([
+                            NSAttributedString.Key.font: UIFont.monospacedSystemFont(
+                                ofSize: 18,
+                                weight: .regular
+                            )
+                        ])
+                    )
                 )
                 attributedString.mutableString.append(
                     lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
@@ -165,16 +144,12 @@ class ProgramViewController: UIViewController {
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
             highlightExistingText()
         }
-  }
+    }
     
     @objc func openModal() {
         self.navigationController?.present(
             {
-                let modal = UINavigationController(
-                    rootViewController: ProgramRunViewController(
-                        viewModel: viewModel
-                    )
-                )
+                let modal = UINavigationController(rootViewController: programRunModal)
                 modal.modalPresentationStyle = .pageSheet
                 return modal
             }(),

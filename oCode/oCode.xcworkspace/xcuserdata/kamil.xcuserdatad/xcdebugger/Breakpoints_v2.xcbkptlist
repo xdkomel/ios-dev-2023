@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CD7F1063-6F56-410D-8759-2B81EB60269A"
+            uuid = "581353B5-8989-40EA-9D40-0A989ACAE1FB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ProgramViewController.swift"
+            filePath = "oCode/ViewControllers/ProgramViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "viewWillDisappear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,79 +23,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "17528F4C-367F-4EB0-86BA-EBF0A3082F99"
+            uuid = "CA7B93AA-6037-4190-9269-C29D9272B5AC"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ProgramViewController.swift"
+            filePath = "oCode/ViewModels/ProgramViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "init(program:storage:)"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "runCode()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B306F9D3-3BFF-49B8-ACFE-F1F79783C3B0"
+            uuid = "20E67F43-9293-4080-972E-4F1992A6839E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ProgramRunViewController.swift"
+            filePath = "oCode/ViewControllers/ProgramRunModalViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "oCode/ProgramViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "setBindings()"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "setBinding()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3 - fbe1ebb8348eaef3"
+                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "oCode.ProgramViewController.setBindings() -&gt; ()"
+                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
                   moduleName = "oCode"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "132"
-                  endingLineNumber = "132"
-                  offsetFromSymbolStart = "2976">
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "162">
                </Location>
                <Location
-                  uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3 - 408f844e819f462b"
+                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "oCode.ProgramViewController.highlightExistingText() -&gt; ()"
+                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
                   moduleName = "oCode"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "132"
-                  endingLineNumber = "132"
-                  offsetFromSymbolStart = "55">
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "304">
                </Location>
             </Locations>
          </BreakpointContent>
