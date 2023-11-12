@@ -8,6 +8,7 @@
         <attribute name="code" optional="YES" attributeType="String"/>
         <attribute name="input" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="output" optional="YES" attributeType="String"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LanguageDataModel"/>
     </entity>
 </model>

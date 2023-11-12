@@ -30,7 +30,10 @@ class ProgramViewController: UIViewController {
                 compilerName: program.language?.tag ?? "py",
                 fullName: program.language?.fullName ?? "Python"
             ),
-            input: program.input
+            input: program.input,
+            output: program.output == nil ?
+                .empty :
+                .oldEmpty(oldResult: program.output!)
         )
         self.program = program
         self.storage = storage
@@ -47,6 +50,10 @@ class ProgramViewController: UIViewController {
         program.language?.fullName = viewModel.target.fullName
         program.language?.tag = viewModel.target.compilerName
         program.input = viewModel.input
+        program.output = switch viewModel.output {
+        case .oldEmpty(let oldResult): oldResult
+        default: nil
+        }
         storage.save()
         super.viewWillDisappear(animated)
     }
@@ -69,10 +76,13 @@ class ProgramViewController: UIViewController {
         )
         
         codeText.text = viewModel.code
+        highlightText(viewModel.code)
         codeText.isScrollEnabled = true
         codeText.isEditable = true
         codeText.isSelectable = true
-        codeText.font = .systemFont(ofSize: 18)
+        codeText.font = .monospacedSystemFont(ofSize: 18, weight: .regular)
+        codeText.autocapitalizationType = .none
+        codeText.autocorrectionType = .no
         
         setView()
         setBindings()
@@ -86,12 +96,19 @@ class ProgramViewController: UIViewController {
     }
     
     func setBindings() {
-        // View -> (ViewModel + View)
+        // Update the viewModel
+        codeText.textPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] text in
+                self?.viewModel.code = text
+            }
+            .store(in: &subscriptions)
+        
+        // Highlight the text
         codeText.textPublisher
             .receive(on: RunLoop.main)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
-                self?.viewModel.code = text
                 self?.highlightText(text)
             }
             .store(in: &subscriptions)
@@ -99,18 +116,32 @@ class ProgramViewController: UIViewController {
     
     func highlightText(_ text: String) {
         _Concurrency.Task {
-            codeText.text = text
+            let cursor = codeText.selectedRange
+            let lastSymbol = text.last
             do {
-                let attributedString = try await Highlight.text(text, style: .light(.google)).attributed
-                codeText.attributedText = NSAttributedString(
-                    attributedString.mergingAttributes(
-                        .init([
-                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)
-                        ]),
-                        mergePolicy: .keepNew
-                    )
+                var highlighted = try await Highlight.text(
+                    text,
+                    language: self.viewModel.target.compilerName, 
+                    style: .light(.google)
+                ).attributed
+                let attributedString = NSMutableAttributedString(
+                    highlighted.mergingAttributes(.init([
+                        NSAttributedString.Key.font: UIFont.monospacedSystemFont(
+                            ofSize: 18,
+                            weight: .regular
+                        )
+                    ]))
                 )
+                attributedString.mutableString.append(
+                    lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
+                        lastSymbol?.description ?? "" :
+                        ""
+                )
+                codeText.attributedText = attributedString
+                codeText.selectedRange = cursor
             } catch {
+                codeText.text = text
+                codeText.selectedRange = cursor
                 print("error when highlighting")
             }
         }
