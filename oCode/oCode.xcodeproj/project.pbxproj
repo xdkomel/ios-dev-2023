@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3F3281054AD5CE3FA381F118 /* Pods_oCodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C51C7462CC455E1B6D05AC /* Pods_oCodeTests.framework */; };
 		8E4DD7442B000CFD00EF9FEB /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD7432B000CFD00EF9FEB /* ListController.swift */; };
+		8E4DD7472B003DEC00EF9FEB /* HighlightSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8E4DD7462B003DEC00EF9FEB /* HighlightSwift */; };
+		8E4DD7492B00DDDD00EF9FEB /* ProgramRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD7482B00DDDD00EF9FEB /* ProgramRunViewController.swift */; };
+		8E4DD74B2B010D8C00EF9FEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD74A2B010D8C00EF9FEB /* Storage.swift */; };
 		8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B482AFBC68E0042A87F /* AppDelegate.swift */; };
 		8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */; };
 		8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */; };
@@ -56,6 +59,8 @@
 		6ABABD770E9DF1B59B94955E /* Pods-oCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-oCodeTests.debug.xcconfig"; path = "Target Support Files/Pods-oCodeTests/Pods-oCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8764644F3027C22863A77C16 /* Pods-oCode-oCodeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-oCode-oCodeUITests.debug.xcconfig"; path = "Target Support Files/Pods-oCode-oCodeUITests/Pods-oCode-oCodeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8E4DD7432B000CFD00EF9FEB /* ListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
+		8E4DD7482B00DDDD00EF9FEB /* ProgramRunViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramRunViewController.swift; sourceTree = "<group>"; };
+		8E4DD74A2B010D8C00EF9FEB /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8EE41B452AFBC68E0042A87F /* oCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE41B482AFBC68E0042A87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A05025C9E8DB1E1E1469421B /* Pods_oCode.framework in Frameworks */,
+				8E4DD7472B003DEC00EF9FEB /* HighlightSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +152,8 @@
 				8EE41B892AFD47000042A87F /* ProgramOutput.swift */,
 				8EE41B8C2AFD479F0042A87F /* SupportedLanguages.swift */,
 				8E4DD7432B000CFD00EF9FEB /* ListController.swift */,
+				8E4DD7482B00DDDD00EF9FEB /* ProgramRunViewController.swift */,
+				8E4DD74A2B010D8C00EF9FEB /* Storage.swift */,
 			);
 			path = oCode;
 			sourceTree = "<group>";
@@ -209,6 +217,9 @@
 			dependencies = (
 			);
 			name = oCode;
+			packageProductDependencies = (
+				8E4DD7462B003DEC00EF9FEB /* HighlightSwift */,
+			);
 			productName = oCode;
 			productReference = 8EE41B452AFBC68E0042A87F /* oCode.app */;
 			productType = "com.apple.product-type.application";
@@ -284,6 +295,9 @@
 				Base,
 			);
 			mainGroup = 8EE41B3C2AFBC68E0042A87F;
+			packageReferences = (
+				8E4DD7452B003DEC00EF9FEB /* XCRemoteSwiftPackageReference "highlightswift" */,
+			);
 			productRefGroup = 8EE41B462AFBC68E0042A87F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -450,7 +464,9 @@
 				8EE41B8D2AFD479F0042A87F /* SupportedLanguages.swift in Sources */,
 				8E4DD7442B000CFD00EF9FEB /* ListController.swift in Sources */,
 				8EE41B532AFBC68E0042A87F /* oCode.xcdatamodeld in Sources */,
+				8E4DD7492B00DDDD00EF9FEB /* ProgramRunViewController.swift in Sources */,
 				8EE41B842AFC2EEA0042A87F /* CompilerApi.swift in Sources */,
+				8E4DD74B2B010D8C00EF9FEB /* Storage.swift in Sources */,
 				8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */,
 				8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */,
 				8EE41B902AFD4FE30042A87F /* HomeScreenViewController.swift in Sources */,
@@ -806,6 +822,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8E4DD7452B003DEC00EF9FEB /* XCRemoteSwiftPackageReference "highlightswift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/appstefan/highlightswift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E4DD7462B003DEC00EF9FEB /* HighlightSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E4DD7452B003DEC00EF9FEB /* XCRemoteSwiftPackageReference "highlightswift" */;
+			productName = HighlightSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8EE41B512AFBC68E0042A87F /* oCode.xcdatamodeld */ = {
