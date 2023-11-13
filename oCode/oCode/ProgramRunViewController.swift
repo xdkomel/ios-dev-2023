@@ -43,7 +43,7 @@ class ProgramRunViewController: UIViewController {
         )
         inputField.textAlignment = .center
         inputField.borderStyle = .roundedRect
-        outputText.text = "output"
+        inputField.text = viewModel.input
         outputText.textAlignment = .left
         setView()
         setBinding()
@@ -66,7 +66,7 @@ class ProgramRunViewController: UIViewController {
     private func setBinding() {
         // View -> ViewModel
         inputField.textPublisher
-            .prepend([inputField.text ?? ""])
+            .prepend([viewModel.input ?? inputField.text ?? ""])
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
                 self?.viewModel.input = text
