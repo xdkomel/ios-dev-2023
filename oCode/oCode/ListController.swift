@@ -15,7 +15,7 @@ final class ListController: UICollectionViewController {
             applySnapshot()
         }
     }
-
+    
     private enum Section: CaseIterable {
         case main
     }
