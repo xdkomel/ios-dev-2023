@@ -45,7 +45,7 @@ class ProgramViewController: UIViewController {
             return title
         }()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Run",
+            title: NSLocalizedString("program.run-button", comment: ""),
             style: .done,
             target: self,
             action: #selector(openModal)
