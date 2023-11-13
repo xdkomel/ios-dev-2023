@@ -6,11 +6,13 @@ PODS:
     - Alamofire (~> 5.0)
   - SnapKit (5.6.0)
   - SwiftLint (0.53.0)
+  - Swinject (2.8.3)
 
 DEPENDENCIES:
   - Moya/Combine (~> 15.0)
   - SnapKit (~> 5.6.0)
   - SwiftLint
+  - Swinject
 
 SPEC REPOS:
   trunk:
@@ -18,13 +20,15 @@ SPEC REPOS:
     - Moya
     - SnapKit
     - SwiftLint
+    - Swinject
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
+  Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
 
-PODFILE CHECKSUM: 26935d8e01e9e41be0eb6b913c898cd730495f48
+PODFILE CHECKSUM: 8cbe60d3af17ecf9a90660d826cad91e3bf29a05
 
 COCOAPODS: 1.14.2

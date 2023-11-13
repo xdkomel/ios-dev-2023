@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Combine
 
-class ProgramRunViewController: UIViewController {
+class ProgramRunModalViewController: UIViewController {
     private let inputField = UITextField()
     private let outputText = UILabel()
     
@@ -26,7 +26,7 @@ class ProgramRunViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -44,9 +44,10 @@ class ProgramRunViewController: UIViewController {
         inputField.textAlignment = .center
         inputField.borderStyle = .roundedRect
         inputField.text = viewModel.input
-        outputText.textAlignment = .left
+        outputText.textAlignment = .center
         setView()
         setBinding()
+        super.viewWillAppear(animated)
     }
     
     private func setView() {
@@ -91,7 +92,9 @@ class ProgramRunViewController: UIViewController {
                     self?.outputText.text = description
                     self?.outputText.textColor = .systemRed
                 case let .data(output):
-                    self?.outputText.text = output
+                    self?.outputText.text = output.isEmpty ?
+                        "[empty output]" :
+                        output
                     self?.outputText.textColor = .label
                 }
             }
@@ -103,12 +106,11 @@ class ProgramRunViewController: UIViewController {
     }
     
     @objc private func close() {
-        self.dismiss(animated: true)
-        switch self.viewModel.output {
-        case let .data(output):
-            self.viewModel.output = .oldEmpty(oldResult: output)
-        default:
-            self.viewModel.output = .empty
+        dismiss(animated: true)
+        viewModel.output = switch viewModel.output {
+        case let .oldEmpty(oldResult): .oldEmpty(oldResult: oldResult)
+        case let .data(output): .oldEmpty(oldResult: output)
+        default: .empty
         }
     }
 }
