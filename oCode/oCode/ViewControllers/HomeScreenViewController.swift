@@ -10,14 +10,27 @@ import UIKit
 import CoreData
 
 class HomeScreenViewController: UIViewController {
-    let storage = Storage(
-        (UIApplication.shared.delegate as! AppDelegate)
-            .persistentContainer
-            .viewContext
-    )
-    var list = ListController()
-    var label = UILabel()
-    var button = UIButton()
+    private let storage: Storage
+    private let programViewController: ProgramViewController
+    private let programViewModel: ProgramViewModel
+    private let list = ListController()
+    private let label = UILabel()
+    private let button = UIButton()
+    
+    init(
+        storage: Storage,
+        programViewController: ProgramViewController,
+        programViewModel: ProgramViewModel
+    ) {
+        self.storage = storage
+        self.programViewController = programViewController
+        self.programViewModel = programViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -114,8 +127,36 @@ class HomeScreenViewController: UIViewController {
     }
     
     func openProgram(_ program: ProgramDataModel) {
+        programViewModel.update(
+            name: program.name,
+            code: program.code,
+            target: program.language?.tag != nil && program.language?.fullName != nil ?
+                .init(
+                    compilerName: program.language!.tag!,
+                    fullName: program.language!.fullName!
+                ) :
+                nil,
+            input: program.input,
+            output: program.output == nil ?
+                .empty :
+                .oldEmpty(oldResult: program.output!)
+        )
+        programViewController.onClose = { [weak self] in
+            program.name = self?.programViewModel.name
+            program.code = self?.programViewModel.code
+            program.language?.fullName = self?.programViewModel.target.fullName
+            program.language?.tag = self?.programViewModel.target.compilerName
+            program.input = self?.programViewModel.input
+            program.output = switch self?.programViewModel.output {
+            case .oldEmpty(let oldResult): oldResult
+            case .data(let output): output
+            default: nil
+            }
+            self?.storage.save()
+            self?.programViewModel.setDefault()
+        }
         navigationController?.pushViewController(
-            ProgramViewController(program: program, storage: storage),
+            programViewController,
             animated: true
         )
     }

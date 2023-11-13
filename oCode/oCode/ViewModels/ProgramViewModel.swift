@@ -23,24 +23,56 @@ final class ProgramViewModel {
     @Published var target: TargetLanguage
     @Published var input: String?
     @Published var output: OutputState
-    @Published var untouched = true
-    private var bindings = Set<AnyCancellable>()
-    private let compilerApi = MoyaProvider<Compiler>()
+    private let compilerApi: MoyaProvider<Compiler>
     
     init(
+        compilerApi: MoyaProvider<Compiler>,
         name: String,
         code: String,
         target: TargetLanguage,
         input: String? = nil,
-        output: OutputState = .empty,
-        untouched: Bool = true
+        output: OutputState = .empty
     ) {
+        self.compilerApi = compilerApi
         self.name = name
         self.code = code
         self.target = target
         self.input = input
         self.output = output
-        self.untouched = untouched
+    }
+    
+    init(compilerApi: MoyaProvider<Compiler>) {
+        self.compilerApi = compilerApi
+        name = "Program \(Int.random(in: 1...1000))"
+        code = "print(int(input()))"
+        target = .init(compilerName: "py", fullName: "Python")
+        input = nil
+        output = .empty
+    }
+    
+    func update(
+        name: String? = nil,
+        code: String? = nil,
+        target: TargetLanguage? = nil,
+        input: String? = nil,
+        output: OutputState = .empty
+    ) {
+        self.name = name ?? self.name
+        self.code = code ?? self.code
+        self.target = target ?? self.target
+        self.input = input ?? self.input
+        self.output = switch output {
+        case .empty: self.output
+        default: output
+        }
+    }
+    
+    func setDefault() {
+        name = "Program \(Int.random(in: 1...1000))"
+        code = "print(int(input()))"
+        target = .init(compilerName: "py", fullName: "Python")
+        input = nil
+        output = .empty
     }
     
     func runCode() {

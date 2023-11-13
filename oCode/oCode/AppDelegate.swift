@@ -16,11 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        window = UIWindow()
-        window?.rootViewController = HomeScreenViewController()
-        window?.makeKeyAndVisible()
-    
-        return true
+        true
     }
 
     // MARK: UISceneSession Lifecycle
