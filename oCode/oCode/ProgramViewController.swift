@@ -10,7 +10,7 @@ import SnapKit
 import Moya
 import Combine
 
-class ViewController: UIViewController {
+class ProgramViewController: UIViewController {
     // UI
     private let codeField = UITextField()
     private let runButton = UIButton()
