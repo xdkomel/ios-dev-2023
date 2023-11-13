@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '15.0'
+
+target 'oCode' do
+  use_frameworks!
+
+  pod 'SnapKit', '~> 5.6.0'
+  pod 'Moya/Combine', '~> 15.0'
+  pod 'SwiftLint'
+  # Pods for oCode
+
+  target 'oCodeTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'oCodeUITests' do
+    # Pods for testing
+  end
+
+end

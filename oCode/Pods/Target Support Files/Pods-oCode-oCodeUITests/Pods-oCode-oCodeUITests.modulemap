@@ -1,0 +1,6 @@
+framework module Pods_oCode_oCodeUITests {
+  umbrella header "Pods-oCode-oCodeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
