@@ -22,7 +22,7 @@ final class ProgramViewModel {
     @Published var code: String
     @Published var target: TargetLanguage
     @Published var input: String?
-    @Published var output: OutputState = .empty
+    @Published var output: OutputState
     @Published var untouched = true
     private var bindings = Set<AnyCancellable>()
     private let compilerApi = MoyaProvider<Compiler>()
@@ -32,12 +32,14 @@ final class ProgramViewModel {
         code: String,
         target: TargetLanguage,
         input: String? = nil,
+        output: OutputState = .empty,
         untouched: Bool = true
     ) {
         self.name = name
         self.code = code
         self.target = target
         self.input = input
+        self.output = output
         self.untouched = untouched
     }
     
