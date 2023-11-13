@@ -52,5 +52,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "oCode/ProgramViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "setBindings()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3 - fbe1ebb8348eaef3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "oCode.ProgramViewController.setBindings() -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "2976">
+               </Location>
+               <Location
+                  uuid = "CE4DDFF6-8C04-4A2D-97ED-00A167F151B3 - 408f844e819f462b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "oCode.ProgramViewController.highlightExistingText() -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
