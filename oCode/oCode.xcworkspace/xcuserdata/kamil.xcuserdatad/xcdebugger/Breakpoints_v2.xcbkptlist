@@ -126,8 +126,8 @@
             filePath = "oCode/ProgramViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "init(programCode:programInput:programName:programTarget:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "oCode/ProgramViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "setBindings()"
             landmarkType = "7">
          </BreakpointContent>
@@ -162,6 +162,85 @@
             endingLineNumber = "60"
             landmarkName = "runCode()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A31B631A-A027-4A7B-AEC5-8EBAAC2A00F3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "oCode/ProgramViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4555500D-9646-4D1D-90AB-729813F63823"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "oCode/ProgramViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "highlightText(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4555500D-9646-4D1D-90AB-729813F63823 - cf442da49a98d1cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "oCode.ProgramViewController.highlightText(Swift.String) -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "113">
+               </Location>
+               <Location
+                  uuid = "4555500D-9646-4D1D-90AB-729813F63823 - afc0ee05eb5c98ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable () async -&gt; () in oCode.ProgramViewController.highlightText(Swift.String) -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "281">
+               </Location>
+               <Location
+                  uuid = "4555500D-9646-4D1D-90AB-729813F63823 - 45b7e9f22887508"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in oCode.ProgramViewController.highlightText(Swift.String) -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ProgramViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "58">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

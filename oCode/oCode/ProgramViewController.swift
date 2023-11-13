@@ -9,10 +9,11 @@ import UIKit
 import SnapKit
 import Moya
 import Combine
+import HighlightSwift
 
 class ProgramViewController: UIViewController {
     // UI
-    private let codeField = UITextField()
+    private let codeText = UITextView()
     private let outputText = UILabel()
     // Business
     private let compilerApi = MoyaProvider<Compiler>()
@@ -52,44 +53,63 @@ class ProgramViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         title = programName
-        let runButton = UIBarButtonItem(
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Run",
             style: .done,
             target: self,
             action: #selector(onRunCode)
         )
-        self.navigationItem.rightBarButtonItem = runButton
-        codeField.text = programCode
+        
+        codeText.isScrollEnabled = true
+        codeText.isEditable = true
+        codeText.isSelectable = true
+        codeText.font = .systemFont(ofSize: 24)
         outputText.text = "Default"
         
         setView()
         setBindings()
     }
     
-    func setView() {
-        view.addSubview(codeField)
-        view.addSubview(outputText)
-        
-        codeField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-        outputText.snp.makeConstraints { make in
-            make.top.equalTo(codeField.snp.bottom).inset(-16)
-            make.leading.trailing.equalToSuperview().inset(16)
+    func highlightText(_ text: String) {
+        _Concurrency.Task {
+            do {
+                let attributedString = try await Highlight.text(text, style: .light(.google)).attributed
+                codeText.text = text
+                codeText.attributedText = NSAttributedString(attributedString)
+            } catch {
+                codeText.text = text
+                print("error when highlighting")
+            }
         }
     }
     
+    func setView() {
+        view.addSubview(codeText)
+//        view.addSubview(outputText)
+        
+        codeText.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(16)
+//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
+//            make.leading.trailing.equalToSuperview().inset(16)
+        }
+//        outputText.snp.makeConstraints { make in
+//            make.top.equalTo(codeText.snp.bottom).inset(-16)
+//            make.leading.trailing.equalToSuperview().inset(16)
+//        }
+    }
+    
     func setBindings() {
-        // View -> ViewModel
-        codeField.textPublisher
-            .prepend([codeField.text ?? ""])
+        // View -> (ViewModel + View)
+        codeText.textPublisher
+            .prepend([codeText.text ?? ""])
             .receive(on: RunLoop.main)
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
                 self?.viewModel.code = text
+                self?.highlightText(text)
             }
             .store(in: &subsctiptions)
-        
         
         // ViewModel -> View
         viewModel.$output
@@ -110,13 +130,13 @@ class ProgramViewController: UIViewController {
     }
 }
 
-extension UITextField {
+extension UITextView {
     var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter.default.publisher(
-            for: UITextField.textDidChangeNotification,
+            for: UITextView.textDidChangeNotification,
             object: self
         )
-        .compactMap { $0.object as? UITextField }
+        .compactMap { $0.object as? UITextView }
         .compactMap(\.text)
         .eraseToAnyPublisher()
     }
