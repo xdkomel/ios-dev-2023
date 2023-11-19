@@ -19,8 +19,8 @@ class Storage {
     func dataToViewModel(_ dataModel: ProgramDataModel) -> ProgramData {
         .init(
             id: dataModel.hash,
-            name: dataModel.name ?? "asanali",
-            code: dataModel.code ?? "asanali",
+            name: dataModel.name ?? generatedProgramName,
+            code: dataModel.code ?? defaultProgramCode,
             target: dataModel.language?.fullName != nil && dataModel.language?.tag != nil ?
                 .init(
                     compilerName: dataModel.language!.tag!,
@@ -39,6 +39,12 @@ class Storage {
     }
     let defaultProgramCode: String = "print(int(input()))"
     let defaultProgramTarget: TargetLanguage = .init(compilerName: "py", fullName: "Python")
+    var defaultProgramLanguage: LanguageDataModel {
+        let data = LanguageDataModel(context: context)
+        data.fullName = "Python"
+        data.tag = "py"
+        return data
+    }
     
     func load() -> [ProgramData]? {
         do {
@@ -55,6 +61,9 @@ class Storage {
     
     func newProgram() -> ProgramData {
         let newProgram = ProgramDataModel(context: context)
+        newProgram.name = generatedProgramName
+        newProgram.code = defaultProgramCode
+        newProgram.language = defaultProgramLanguage
         loadedPrograms[newProgram.hash] = newProgram
         return dataToViewModel(newProgram)
     }

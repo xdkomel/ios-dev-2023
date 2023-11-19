@@ -34,8 +34,8 @@ enum OutputState {
     case data(output: String)
 }
 
-class ProgramModel: ObservableObject {
-    var programData: ProgramData?
+class ProgramModel {
+    @Published var programData: ProgramData?
     private let compilerApi: MoyaProvider<Compiler>
     private let storage: Storage
     
@@ -54,12 +54,12 @@ class ProgramModel: ObservableObject {
     }
     
     func runCode() {
-        guard var program = programData else {
+        guard let program = programData else {
             print("not found a program to run")
             return
         }
         // update UI
-        program.output = .loading
+        programData?.output = .loading
         
         // request
         compilerApi.request(
@@ -68,24 +68,34 @@ class ProgramModel: ObservableObject {
                 target: program.target.compilerName,
                 input: program.input ?? "0"
             )
-        ) { result in
+        ) { [weak self] result in
             switch result {
             case let .success(response):
                 switch response.statusCode {
                 case 200: do {
                     let output = try JSONDecoder().decode(ProgramOutput.self, from: response.data)
-                    self.programData?.output = .data(output: output.output)
+                    self?.updateOutput(
+                        .data(output: output.output)
+                    )
                 } catch {
-                    self.programData?.output = .error(description: "The app is outdated for the following backend")
+                    self?.updateOutput(
+                        .error(description: "The app is outdated for the following backend")
+                    )
                 }
-                default: self.programData?.output = .error(description: "Request error, recieved code \(response.statusCode)")
+                default: 
+                    self?.updateOutput(
+                        .error(description: "Request error, recieved code \(response.statusCode)")
+                    )
                     do {
                         print(try response.mapJSON())
                     } catch {
                         print()
                     }
                 }
-            case .failure: self.programData?.output = .error(description: "No internet connection")
+            case .failure:
+                self?.updateOutput(
+                    .error(description: "No internet connection")
+                )
             }
         }
     }

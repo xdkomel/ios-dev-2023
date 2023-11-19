@@ -13,7 +13,7 @@ import HighlightSwift
 import SwiftUI
 
 final class ProgramViewModel {
-    @ObservedObject var program: ProgramModel
+    let program: ProgramModel
     let coordinator: Coordinator
     
     init(program: ProgramModel, coordinator: Coordinator) {

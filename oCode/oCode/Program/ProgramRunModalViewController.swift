@@ -83,9 +83,9 @@ class ProgramRunModalViewController: UIViewController {
             .store(in: &subscriptions)
         
         // ViewModel -> View
-        viewModel.program.objectWillChange
-            .sink { [weak self] in
-                switch self?.viewModel.program.programData?.output {
+        viewModel.program.$programData
+            .sink { [weak self] program in
+                switch program?.output {
                 case let .oldEmpty(oldResult):
                     self?.outputText.text = "\(NSLocalizedString("program.last-output", comment: "")) \(self?.filterOutput(oldResult) ?? oldResult)"
                     self?.outputText.textColor = .secondaryLabel
@@ -105,7 +105,6 @@ class ProgramRunModalViewController: UIViewController {
                 }
             }
             .store(in: &subscriptions)
-//            .store(in: &subscriptions)
     }
     
     private func filterOutput(_ output: String) -> String {

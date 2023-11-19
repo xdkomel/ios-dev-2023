@@ -17,7 +17,6 @@ class HomeScreenViewController: UIViewController {
     private let label = UILabel()
     private let button = UIButton()
     
-    
     init(homeScreenViewModel: HomeScreenViewModel) {
         viewModel = homeScreenViewModel
         super.init(nibName: nil, bundle: nil)

@@ -46,7 +46,7 @@ class ProgramViewController: UIViewController {
             action: #selector(openModal)
         )
         
-        highlightText(viewModel.program.programData?.code ?? "kamil")
+        highlightText(viewModel.program.programData?.code ?? "")
         codeText.isScrollEnabled = true
         codeText.isEditable = true
         codeText.isSelectable = true
@@ -56,6 +56,7 @@ class ProgramViewController: UIViewController {
         
         setView()
         setBindings()
+        viewModel.save()
         super.viewWillAppear(animated)
     }
     
