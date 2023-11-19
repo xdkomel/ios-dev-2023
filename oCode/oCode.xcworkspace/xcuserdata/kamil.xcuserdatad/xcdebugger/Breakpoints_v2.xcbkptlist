@@ -7,81 +7,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "581353B5-8989-40EA-9D40-0A989ACAE1FB"
+            uuid = "3CA1BF36-0ADF-4D90-A082-F149FE793A2D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ViewControllers/ProgramViewController.swift"
+            filePath = "oCode/Coordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "viewWillDisappear(_:)"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "openProgram(withId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CA7B93AA-6037-4190-9269-C29D9272B5AC"
+            uuid = "0E5C3EAB-C491-4F3D-A6F9-84D258E049A9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ViewModels/ProgramViewModel.swift"
+            filePath = "oCode/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "runCode()"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "scene(_:willConnectTo:options:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "20E67F43-9293-4080-972E-4F1992A6839E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "oCode/ViewControllers/ProgramRunModalViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "setBinding()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
-                  moduleName = "oCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "162">
-               </Location>
-               <Location
-                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
-                  moduleName = "oCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "304">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

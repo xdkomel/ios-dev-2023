@@ -17,13 +17,20 @@ class ProgramViewController: UIViewController {
     // Business
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel: ProgramViewModel
-    private var programRunModal: ProgramRunModalViewController
+    var programIdToLoad: ObjectIdentifier?
+//    private let coordinator: Coordinator
+//    private var programRunModal: ProgramRunModalViewController
     // Persistence
-    var onClose: (() -> Void)?
+//    var onClose: (() -> Void)?
     
-    init(viewModel: ProgramViewModel, programRunModal: ProgramRunModalViewController) {
+    init(
+        viewModel: ProgramViewModel
+//        coordinator: Coordinator
+//        programRunModal: ProgramRunModalViewController
+    ) {
         self.viewModel = viewModel
-        self.programRunModal = programRunModal
+//        self.coordinator = coordinator
+//        self.programRunModal = programRunModal
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,16 +38,11 @@ class ProgramViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        onClose?()
-        super.viewWillDisappear(animated)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .systemBackground
         self.navigationItem.titleView = {
             let title = UILabel()
-            title.text = viewModel.name
+            title.text = viewModel.program.programData?.name
             title.font = .boldSystemFont(ofSize: UIFont.buttonFontSize)
             return title
         }()
@@ -51,8 +53,8 @@ class ProgramViewController: UIViewController {
             action: #selector(openModal)
         )
         
-        codeText.text = viewModel.code
-        highlightText(viewModel.code)
+//        codeText.text = viewModel.code
+//        highlightText(viewModel.code)
         codeText.isScrollEnabled = true
         codeText.isEditable = true
         codeText.isSelectable = true
@@ -62,6 +64,9 @@ class ProgramViewController: UIViewController {
         
         setView()
         setBindings()
+        if let programId = programIdToLoad {
+            viewModel.loadProgram(withId: programId)
+        }
         super.viewWillAppear(animated)
     }
     
@@ -75,15 +80,13 @@ class ProgramViewController: UIViewController {
     func setBindings() {
         // Update the viewModel
         codeText.textPublisher
-            .receive(on: RunLoop.main)
             .sink { [weak self] text in
-                self?.viewModel.code = text
+                self?.viewModel.program.programData?.code = text
             }
             .store(in: &subscriptions)
         
         // Highlight the text on change
         codeText.textPublisher
-            .receive(on: RunLoop.main)
             .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
                 self?.highlightText(text)
@@ -98,7 +101,6 @@ class ProgramViewController: UIViewController {
     func highlightText(_ text: String) {
         _Concurrency.Task {
             let cursor = codeText.selectedRange
-            let lastSymbol = text.last
             let style: HighlightStyle = view
                 .window?
                 .windowScene?
@@ -106,35 +108,52 @@ class ProgramViewController: UIViewController {
                 .userInterfaceStyle == .dark ?
                     .dark(.google) :
                     .light(.google)
-            do {
-                let highlighted = try await Highlight.text(
-                    text,
-                    language: self.viewModel.target.compilerName, 
-                    style: style
-                ).attributed
-                let attributedString = NSMutableAttributedString(
-                    highlighted.mergingAttributes(
-                        .init([
-                            NSAttributedString.Key.font: UIFont.monospacedSystemFont(
-                                ofSize: 18,
-                                weight: .regular
-                            )
-                        ])
-                    )
-                )
-                attributedString.mutableString.append(
-                    lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
-                        lastSymbol?.description ?? "" :
-                        ""
-                )
+            let compiler = viewModel.program.programData?.target.compilerName
+            if let attributedString = await viewModel.highlightText(
+                text,
+                compilerName: compiler,
+                style: style
+            ) {
                 codeText.attributedText = attributedString
                 codeText.selectedRange = cursor
-            } catch {
+            } else {
                 codeText.text = text
                 codeText.selectedRange = cursor
-                print("error when highlighting")
             }
         }
+//        _Concurrency.Task {
+//            let cursor = codeText.selectedRange
+//            let lastSymbol = text.last
+//
+//            do {
+//                let highlighted = try await Highlight.text(
+//                    text,
+//                    language: self.viewModel.target.compilerName, 
+//                    style: style
+//                ).attributed
+//                let attributedString = NSMutableAttributedString(
+//                    highlighted.mergingAttributes(
+//                        .init([
+//                            NSAttributedString.Key.font: UIFont.monospacedSystemFont(
+//                                ofSize: 18,
+//                                weight: .regular
+//                            )
+//                        ])
+//                    )
+//                )
+//                attributedString.mutableString.append(
+//                    lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
+//                        lastSymbol?.description ?? "" :
+//                        ""
+//                )
+//                codeText.attributedText = attributedString
+//                codeText.selectedRange = cursor
+//            } catch {
+//                codeText.text = text
+//                codeText.selectedRange = cursor
+//                print("error when highlighting")
+//            }
+//        }
     }
     
     override func traitCollectionDidChange(
@@ -147,14 +166,15 @@ class ProgramViewController: UIViewController {
     }
     
     @objc func openModal() {
-        self.navigationController?.present(
-            {
-                let modal = UINavigationController(rootViewController: programRunModal)
-                modal.modalPresentationStyle = .pageSheet
-                return modal
-            }(),
-            animated: true
-        )
+        viewModel.openRunModal()
+//        self.navigationController?.present(
+//            {
+//                let modal = UINavigationController(rootViewController: programRunModal)
+//                modal.modalPresentationStyle = .pageSheet
+//                return modal
+//            }(),
+//            animated: true
+//        )
     }
 }
 

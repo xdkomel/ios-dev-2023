@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 final class ListController: UICollectionViewController {
-    var onListElementTap: ((ProgramDataModel) -> Void)?
-    var programs: [ProgramDataModel] = [] {
+    var onListElementTap: ((ProgramData) -> Void)?
+    var programs: [ProgramData] = [] {
         didSet {
             applySnapshot()
         }
@@ -20,20 +20,18 @@ final class ListController: UICollectionViewController {
         case main
     }
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, ProgramDataModel> = {
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, ProgramData> = {
         let cellRegistration = UICollectionView
-            .CellRegistration<UICollectionViewListCell, ProgramDataModel> { cell, _, program in
+            .CellRegistration<UICollectionViewListCell, ProgramData> { cell, _, program in
                 var content = cell.defaultContentConfiguration()
                 content.text = program.name
-                if program.language != nil {
-                    content.secondaryText = program.language?.fullName
-                    content.secondaryTextProperties.color = .secondaryLabel
-                    content.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .subheadline)
-                }
+                content.secondaryText = program.target.fullName
+                content.secondaryTextProperties.color = .secondaryLabel
+                content.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .subheadline)
                 cell.contentConfiguration = content
             }
 
-        return UICollectionViewDiffableDataSource<Section, ProgramDataModel>(
+        return UICollectionViewDiffableDataSource<Section, ProgramData>(
             collectionView: collectionView
         ) { collectionView, indexPath, country -> UICollectionViewCell? in
             collectionView.dequeueConfiguredReusableCell(
@@ -50,7 +48,7 @@ final class ListController: UICollectionViewController {
     }
 
     private func applySnapshot(animatingDifferences: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ProgramDataModel>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ProgramData>()
         snapshot.appendSections(Section.allCases)
         snapshot.appendItems(programs)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
