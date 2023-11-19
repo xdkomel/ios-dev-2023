@@ -19,6 +19,7 @@
 		8EC769E22B081DDD00ABC00C /* ProgramModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E12B081DDD00ABC00C /* ProgramModel.swift */; };
 		8EC769E42B0965E000ABC00C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E32B0965E000ABC00C /* Coordinator.swift */; };
 		8EC769E62B097A4700ABC00C /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E52B097A4700ABC00C /* AppContainer.swift */; };
+		8EC769E82B0ABFE300ABC00C /* TargetLanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E72B0ABFE300ABC00C /* TargetLanguagesManager.swift */; };
 		8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B482AFBC68E0042A87F /* AppDelegate.swift */; };
 		8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */; };
 		8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */; };
@@ -72,6 +73,7 @@
 		8EC769E12B081DDD00ABC00C /* ProgramModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramModel.swift; sourceTree = "<group>"; };
 		8EC769E32B0965E000ABC00C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8EC769E52B097A4700ABC00C /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		8EC769E72B0ABFE300ABC00C /* TargetLanguagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetLanguagesManager.swift; sourceTree = "<group>"; };
 		8EE41B452AFBC68E0042A87F /* oCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE41B482AFBC68E0042A87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				8E4DD7502B015DF000EF9FEB /* Models */,
 				8E4DD74A2B010D8C00EF9FEB /* Storage.swift */,
 				8EE41B832AFC2EEA0042A87F /* CompilerApi.swift */,
+				8EC769E72B0ABFE300ABC00C /* TargetLanguagesManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */,
 				8EE41B8A2AFD47010042A87F /* ProgramOutput.swift in Sources */,
 				8EE41B872AFC49070042A87F /* ProgramViewModel.swift in Sources */,
+				8EC769E82B0ABFE300ABC00C /* TargetLanguagesManager.swift in Sources */,
 				8EC769E62B097A4700ABC00C /* AppContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

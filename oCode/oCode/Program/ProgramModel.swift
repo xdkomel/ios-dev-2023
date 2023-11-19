@@ -38,11 +38,18 @@ class ProgramModel {
     @Published var programData: ProgramData?
     private let compilerApi: MoyaProvider<Compiler>
     private let storage: Storage
+    private let targetsManager: TargetLanguagesManager
     
-    init(programData: ProgramData? = nil, compilerApi: MoyaProvider<Compiler>, storage: Storage) {
+    init(
+        programData: ProgramData? = nil,
+        compilerApi: MoyaProvider<Compiler>,
+        storage: Storage,
+        targetsManager: TargetLanguagesManager
+    ) {
         self.programData = programData
         self.compilerApi = compilerApi
         self.storage = storage
+        self.targetsManager = targetsManager
     }
     
     func loadProgram(withId id: Int) {
@@ -51,6 +58,18 @@ class ProgramModel {
             return
         }
         print("couldn't load a program with this id")
+    }
+    
+    func loadTargets() {
+        targetsManager.loadLanguages()
+    }
+    
+    var availableTargetsPublished: Published<[TargetLanguage]>.Publisher {
+        targetsManager.$supportedLanguages
+    }
+    
+    var lastAvailableTargets: [TargetLanguage] {
+        targetsManager.supportedLanguages
     }
     
     func runCode() {

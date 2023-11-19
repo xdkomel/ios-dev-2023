@@ -34,6 +34,13 @@ class AppContainer {
                 MoyaProvider<Compiler>()
             }
             .inObjectScope(.container)
+        container
+            .record(TargetLanguagesManager.self) { res in
+                TargetLanguagesManager(
+                    api: res.provide(MoyaProvider<Compiler>.self)
+                )
+            }
+            .inObjectScope(.container)
         // HomeScreen
         container
             .record(HomeScreenModel.self) { res in
@@ -63,7 +70,8 @@ class AppContainer {
             .record(ProgramModel.self) { res in
                 ProgramModel(
                     compilerApi: res.provide(MoyaProvider<Compiler>.self),
-                    storage: res.provide(Storage.self)
+                    storage: res.provide(Storage.self),
+                    targetsManager: res.provide(TargetLanguagesManager.self)
                 )
             }
             .inObjectScope(.container)

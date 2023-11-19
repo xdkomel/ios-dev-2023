@@ -25,6 +25,10 @@ final class ProgramViewModel {
         program.loadProgram(withId: id)
     }
     
+    func loadTargets() {
+        program.loadTargets()
+    }
+    
     func runCode() {
         program.runCode()
     }
@@ -74,5 +78,9 @@ final class ProgramViewModel {
     
     func save() {
         program.save()
+    }
+    
+    func selectTarget(action: UIAction) {
+        print(action)
     }
 }

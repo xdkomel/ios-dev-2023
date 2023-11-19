@@ -14,6 +14,7 @@ import HighlightSwift
 class ProgramViewController: UIViewController {
     // UI
     private let codeText = UITextView()
+    private let targetSelector = UIButton()
     // Business
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel: ProgramViewModel
@@ -32,6 +33,7 @@ class ProgramViewController: UIViewController {
         if let programId = programIdToLoad {
             viewModel.loadProgram(withId: programId)
         }
+        viewModel.loadTargets()
         view.backgroundColor = .systemBackground
         self.navigationItem.titleView = {
             let title = UILabel()
@@ -39,12 +41,18 @@ class ProgramViewController: UIViewController {
             title.font = .boldSystemFont(ofSize: UIFont.buttonFontSize)
             return title
         }()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("program.run-button", comment: ""),
-            style: .done,
-            target: self,
-            action: #selector(openModal)
-        )
+//        setTargetLanguage()
+        self.targetSelector.showsMenuAsPrimaryAction = true
+        self.targetSelector.changesSelectionAsPrimaryAction = true
+        self.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(
+                title: NSLocalizedString("program.run-button", comment: ""),
+                style: .done,
+                target: self,
+                action: #selector(openModal)
+            ),
+            UIBarButtonItem(customView: self.targetSelector)
+        ]
         
         highlightText(viewModel.program.programData?.code ?? "")
         codeText.isScrollEnabled = true
@@ -58,6 +66,23 @@ class ProgramViewController: UIViewController {
         setBindings()
         viewModel.save()
         super.viewWillAppear(animated)
+    }
+    
+    func setTargetLanguage(selectedName: String, targets: [String]) {
+        self.targetSelector.setTitle(
+            selectedName,
+//            viewModel.program.programData?.target.fullName ?? "Unknown",
+            for: .normal
+        )
+        self.targetSelector.menu = UIMenu(
+            options: .displayInline,
+            children: targets.map {
+                UIAction(title: $0, handler: viewModel.selectTarget)
+            }
+//            children: viewModel.program.availableTargets.last().map { target in
+//                UIAction(title: target.fullName, handler: viewModel.selectTarget)
+//            }
+        )
     }
     
     func setView() {
@@ -82,6 +107,16 @@ class ProgramViewController: UIViewController {
             .sink { [weak self] text in
                 self?.highlightText(text)
                 self?.viewModel.save()
+            }
+            .store(in: &subscriptions)
+        
+        // Update the targets
+        viewModel.program.availableTargetsPublished
+            .prepend([viewModel.program.lastAvailableTargets])
+            .sink { [weak self] targets in
+                self?.setTargetLanguage(selectedName: "selected", targets: targets.map {
+                    $0.compilerName
+                })
             }
             .store(in: &subscriptions)
     }
