@@ -25,7 +25,7 @@ class HomeScreenViewModel {
         model.refreshPrograms()
     }
     
-    func openProgram(withId id: ObjectIdentifier) {
+    func openProgram(withId id: Int) {
         coordinator.openProgram(withId: id)
     }
 }

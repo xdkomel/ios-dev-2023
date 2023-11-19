@@ -7,9 +7,10 @@
 
 import Foundation
 import Moya
+import Combine
 
 struct ProgramData: Hashable {
-    var id: ObjectIdentifier
+    var id: Int
     var name: String
     var code: String
     var target: TargetLanguage
@@ -33,11 +34,10 @@ enum OutputState {
     case data(output: String)
 }
 
-class ProgramModel {
+class ProgramModel: ObservableObject {
     var programData: ProgramData?
     private let compilerApi: MoyaProvider<Compiler>
     private let storage: Storage
-//    private let coordinator: Coordinator
     
     init(programData: ProgramData? = nil, compilerApi: MoyaProvider<Compiler>, storage: Storage) {
         self.programData = programData
@@ -45,12 +45,12 @@ class ProgramModel {
         self.storage = storage
     }
     
-    func loadProgram(withId id: ObjectIdentifier) {
+    func loadProgram(withId id: Int) {
         if let program = storage.findProgram(withId: id) {
             self.programData = program
+            return
         }
         print("couldn't load a program with this id")
-        // TODO couldn't load a program with this id, error state
     }
     
     func runCode() {
@@ -92,5 +92,12 @@ class ProgramModel {
     
     func updateOutput(_ newOutput: OutputState) {
         programData?.output = newOutput
+    }
+    
+    func save() {
+        guard let program = programData else {
+            return
+        }
+        storage.save(program)
     }
 }

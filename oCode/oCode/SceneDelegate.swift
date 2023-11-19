@@ -18,21 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         let window = UIWindow(windowScene: windowScene)
         let navigation = UINavigationController()
         window.rootViewController = navigation
         self.window = window
         coordinator = Coordinator(with: navigation)
-        container.build(withCoordinator: coordinator!)
-//        let root = UINavigationController(
-//            rootViewController: container.provide(HomeScreenViewController.self)
-//        )
-//        container.provide(Coordinator.self).navigationController = root
-//        let root = container.provide(UINavigationController.self)
-//        window.rootViewController = root
+        container.coordinator = coordinator
+        container.build()
         coordinator?.start()
-        
         window.makeKeyAndVisible()
     }
 

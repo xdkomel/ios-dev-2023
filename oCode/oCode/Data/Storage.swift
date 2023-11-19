@@ -10,7 +10,7 @@ import CoreData
 
 class Storage {
     let context: NSManagedObjectContext
-    var loadedPrograms: [ObjectIdentifier : ProgramDataModel] = [:]
+    var loadedPrograms: [Int: ProgramDataModel] = [:]
     
     init(_ context: NSManagedObjectContext) {
         self.context = context
@@ -18,9 +18,9 @@ class Storage {
     
     func dataToViewModel(_ dataModel: ProgramDataModel) -> ProgramData {
         .init(
-            id: dataModel.id,
-            name: dataModel.name ?? generatedProgramName,
-            code: dataModel.code ?? defaultProgramCode,
+            id: dataModel.hash,
+            name: dataModel.name ?? "asanali",
+            code: dataModel.code ?? "asanali",
             target: dataModel.language?.fullName != nil && dataModel.language?.tag != nil ?
                 .init(
                     compilerName: dataModel.language!.tag!,
@@ -44,7 +44,7 @@ class Storage {
         do {
             let programs = try context.fetch(ProgramDataModel.fetchRequest())
             for program in programs {
-                loadedPrograms[program.id] = program
+                loadedPrograms[program.hash] = program
             }
             return programs.map(dataToViewModel)
         } catch {
@@ -55,14 +55,11 @@ class Storage {
     
     func newProgram() -> ProgramData {
         let newProgram = ProgramDataModel(context: context)
-        loadedPrograms[newProgram.id] = newProgram
+        loadedPrograms[newProgram.hash] = newProgram
         return dataToViewModel(newProgram)
     }
     
-    func findProgram(withId id: ObjectIdentifier) -> ProgramData? {
-        if context.hasChanges {
-            load()
-        }
+    func findProgram(withId id: Int) -> ProgramData? {
         if let program = loadedPrograms[id] {
             return dataToViewModel(program)
         }

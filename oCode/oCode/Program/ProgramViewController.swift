@@ -17,20 +17,10 @@ class ProgramViewController: UIViewController {
     // Business
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel: ProgramViewModel
-    var programIdToLoad: ObjectIdentifier?
-//    private let coordinator: Coordinator
-//    private var programRunModal: ProgramRunModalViewController
-    // Persistence
-//    var onClose: (() -> Void)?
+    var programIdToLoad: Int?
     
-    init(
-        viewModel: ProgramViewModel
-//        coordinator: Coordinator
-//        programRunModal: ProgramRunModalViewController
-    ) {
+    init(viewModel: ProgramViewModel) {
         self.viewModel = viewModel
-//        self.coordinator = coordinator
-//        self.programRunModal = programRunModal
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,6 +29,9 @@ class ProgramViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if let programId = programIdToLoad {
+            viewModel.loadProgram(withId: programId)
+        }
         view.backgroundColor = .systemBackground
         self.navigationItem.titleView = {
             let title = UILabel()
@@ -53,8 +46,7 @@ class ProgramViewController: UIViewController {
             action: #selector(openModal)
         )
         
-//        codeText.text = viewModel.code
-//        highlightText(viewModel.code)
+        highlightText(viewModel.program.programData?.code ?? "kamil")
         codeText.isScrollEnabled = true
         codeText.isEditable = true
         codeText.isSelectable = true
@@ -64,9 +56,6 @@ class ProgramViewController: UIViewController {
         
         setView()
         setBindings()
-        if let programId = programIdToLoad {
-            viewModel.loadProgram(withId: programId)
-        }
         super.viewWillAppear(animated)
     }
     
@@ -86,10 +75,12 @@ class ProgramViewController: UIViewController {
             .store(in: &subscriptions)
         
         // Highlight the text on change
+        // Save the program
         codeText.textPublisher
             .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
                 self?.highlightText(text)
+                self?.viewModel.save()
             }
             .store(in: &subscriptions)
     }
@@ -121,39 +112,6 @@ class ProgramViewController: UIViewController {
                 codeText.selectedRange = cursor
             }
         }
-//        _Concurrency.Task {
-//            let cursor = codeText.selectedRange
-//            let lastSymbol = text.last
-//
-//            do {
-//                let highlighted = try await Highlight.text(
-//                    text,
-//                    language: self.viewModel.target.compilerName, 
-//                    style: style
-//                ).attributed
-//                let attributedString = NSMutableAttributedString(
-//                    highlighted.mergingAttributes(
-//                        .init([
-//                            NSAttributedString.Key.font: UIFont.monospacedSystemFont(
-//                                ofSize: 18,
-//                                weight: .regular
-//                            )
-//                        ])
-//                    )
-//                )
-//                attributedString.mutableString.append(
-//                    lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
-//                        lastSymbol?.description ?? "" :
-//                        ""
-//                )
-//                codeText.attributedText = attributedString
-//                codeText.selectedRange = cursor
-//            } catch {
-//                codeText.text = text
-//                codeText.selectedRange = cursor
-//                print("error when highlighting")
-//            }
-//        }
     }
     
     override func traitCollectionDidChange(
@@ -167,14 +125,6 @@ class ProgramViewController: UIViewController {
     
     @objc func openModal() {
         viewModel.openRunModal()
-//        self.navigationController?.present(
-//            {
-//                let modal = UINavigationController(rootViewController: programRunModal)
-//                modal.modalPresentationStyle = .pageSheet
-//                return modal
-//            }(),
-//            animated: true
-//        )
     }
 }
 

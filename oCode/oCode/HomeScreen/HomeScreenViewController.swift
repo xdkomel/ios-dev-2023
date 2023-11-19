@@ -11,9 +11,6 @@ import CoreData
 import Combine
 
 class HomeScreenViewController: UIViewController {
-//    private let storage: Storage
-//    private let programViewController: ProgramViewController
-//    private let programViewModel: ProgramViewModel
     private let viewModel: HomeScreenViewModel
     private var bindings = Set<AnyCancellable>()
     private let list = ListController()
@@ -21,18 +18,8 @@ class HomeScreenViewController: UIViewController {
     private let button = UIButton()
     
     
-    init(
-        homeScreenViewModel: HomeScreenViewModel
-//        coordinator: Coordinator
-//        storage: Storage,
-//        programViewController: ProgramViewController,
-//        programViewModel: ProgramViewModel
-    ) {
+    init(homeScreenViewModel: HomeScreenViewModel) {
         viewModel = homeScreenViewModel
-//        self.coordinator = coordinator
-//        self.storage = storage
-//        self.programViewController = programViewController
-//        self.programViewModel = programViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +33,6 @@ class HomeScreenViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         viewModel.refreshPrograms()
         setBindings()
-//        updateScreen()
     }
     
     override func viewDidLoad() {
@@ -62,11 +48,6 @@ class HomeScreenViewController: UIViewController {
             )
         )
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        updateScreen()
-//        super.viewDidAppear(animated)
-//    }
     
     func updateScreen(optionalPrograms: [ProgramData]?) {
         view.subviews.forEach {
@@ -90,9 +71,6 @@ class HomeScreenViewController: UIViewController {
                 self?.updateScreen(optionalPrograms: model.programs)
             }
             .store(in: &bindings)
-//        viewModel.model.programs
-//            .sink(receiveValue: updateScreen)
-//            .store(in: &bindings)
     }
     
     func setErrorView() {
@@ -149,39 +127,7 @@ class HomeScreenViewController: UIViewController {
     }
     
     func openProgram(_ program: ProgramData) {
-//        programViewModel.update(
-//            name: program.name,
-//            code: program.code,
-//            target: program.language?.tag != nil && program.language?.fullName != nil ?
-//                .init(
-//                    compilerName: program.language!.tag!,
-//                    fullName: program.language!.fullName!
-//                ) :
-//                nil,
-//            input: program.input,
-//            output: program.output == nil ?
-//                .empty :
-//                .oldEmpty(oldResult: program.output!)
-//        )
-//        programViewController.onClose = { [weak self] in
-//            program.name = self?.programViewModel.name
-//            program.code = self?.programViewModel.code
-//            program.language?.fullName = self?.programViewModel.target.fullName
-//            program.language?.tag = self?.programViewModel.target.compilerName
-//            program.input = self?.programViewModel.input
-//            program.output = switch self?.programViewModel.output {
-//            case .oldEmpty(let oldResult): oldResult
-//            case .data(let output): output
-//            default: nil
-//            }
-//            self?.storage.save()
-//            self?.programViewModel.setDefault()
-//        }
         viewModel.openProgram(withId: program.id)
-//        navigationController?.pushViewController(
-//            viewModel.getProgramViewController(withId: program.id),
-//            animated: true
-//        )
     }
     
     @objc func createNewProgram() {

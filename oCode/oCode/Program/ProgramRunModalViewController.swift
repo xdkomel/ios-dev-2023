@@ -43,7 +43,7 @@ class ProgramRunModalViewController: UIViewController {
         )
         inputField.textAlignment = .center
         inputField.borderStyle = .roundedRect
-//        inputField.text = viewModel.program.program.input
+        inputField.text = viewModel.program.programData?.input
         outputText.textAlignment = .center
         outputText.numberOfLines = 3
         setView()
@@ -75,12 +75,17 @@ class ProgramRunModalViewController: UIViewController {
             }
             .store(in: &subscriptions)
         
+        inputField.textPublisher
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.viewModel.save()
+            }
+            .store(in: &subscriptions)
+        
         // ViewModel -> View
-        viewModel.$program
-            .receive(on: RunLoop.main)
-            .sink { [ weak self ] program in
-                
-                switch program.programData?.output {
+        viewModel.program.objectWillChange
+            .sink { [weak self] in
+                switch self?.viewModel.program.programData?.output {
                 case let .oldEmpty(oldResult):
                     self?.outputText.text = "\(NSLocalizedString("program.last-output", comment: "")) \(self?.filterOutput(oldResult) ?? oldResult)"
                     self?.outputText.textColor = .secondaryLabel
@@ -100,6 +105,7 @@ class ProgramRunModalViewController: UIViewController {
                 }
             }
             .store(in: &subscriptions)
+//            .store(in: &subscriptions)
     }
     
     private func filterOutput(_ output: String) -> String {
@@ -119,12 +125,6 @@ class ProgramRunModalViewController: UIViewController {
         default: .empty
         }
         viewModel.closeRunModal(withOutput: outputToStore)
-//        dismiss(animated: true)
-//        viewModel.output = switch viewModel.output {
-//        case let .oldEmpty(oldResult): .oldEmpty(oldResult: oldResult)
-//        case let .data(output): .oldEmpty(oldResult: output)
-//        default: .empty
-//        }
     }
 }
 

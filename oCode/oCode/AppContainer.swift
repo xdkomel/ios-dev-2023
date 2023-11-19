@@ -11,76 +11,84 @@ import Moya
 
 class AppContainer {
     let container = Container()
+    var coordinator: Coordinator?
     
-    func build(withCoordinator coordinator: Coordinator) {
-        register(withCoordinator: coordinator)
-        initCoordinator(coordinator)
+    func build() {
+        guard let coord = coordinator else {
+            print("error building app container")
+            return
+        }
+        register(withCoordinator: coord)
+        initCoordinator(coord)
     }
     
     func register(withCoordinator coordinator: Coordinator) {
-        // Managers
-//        container.register(UINavigationController.self) { res in
-//            UINavigationController(
-//                rootViewController: res.provide(HomeScreenViewController.self)
-//            )
-//        }
-        container.register(Storage.self) { _ in
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            return Storage(appDelegate.persistentContainer.viewContext)
-        }
-        container.register(MoyaProvider<Compiler>.self) { _ in
-            MoyaProvider<Compiler>()
-        }
-//        container
-//            .register(Coordinator.self) { _ in
-//                Coordinator()
-//            }
-//            .initCompleted { res, coordinator in
-//                coordinator.programModalViewController = res.provide(ProgramRunModalViewController.self)
-//                coordinator.programViewController = res.provide(ProgramViewController.self)
-//                coordinator.navigationController = res.provide(UINavigationController.self)
-//            }
+        container
+            .record(Storage.self, name: "default") { _ in
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                return Storage(appDelegate.persistentContainer.viewContext)
+            }
+            .inObjectScope(.container)
+        container
+            .record(MoyaProvider<Compiler>.self) { _ in
+                MoyaProvider<Compiler>()
+            }
+            .inObjectScope(.container)
         // HomeScreen
-        container.register(HomeScreenModel.self) { res in
-            HomeScreenModel(
-                programs: nil,
-                storage: res.provide(Storage.self)
-            )
-        }
-        container.register(HomeScreenViewModel.self) { res in
-            HomeScreenViewModel(
-                model: res.provide(HomeScreenModel.self),
-                coordinator: coordinator
-            )
-        }
-        container.register(HomeScreenViewController.self) { res in
-            HomeScreenViewController(
-                homeScreenViewModel: res.provide(HomeScreenViewModel.self)
-            )
-        }
+        container
+            .record(HomeScreenModel.self) { res in
+                HomeScreenModel(
+                    programs: nil,
+                    storage: res.provide(Storage.self)
+                )
+            }
+            .inObjectScope(.container)
+        container
+            .record(HomeScreenViewModel.self) { res in
+                HomeScreenViewModel(
+                    model: res.provide(HomeScreenModel.self),
+                    coordinator: coordinator
+                )
+            }
+            .inObjectScope(.container)
+        container
+            .record(HomeScreenViewController.self) { res in
+                HomeScreenViewController(
+                    homeScreenViewModel: res.provide(HomeScreenViewModel.self)
+                )
+            }
+            .inObjectScope(.container)
         // Program
-        container.register(ProgramModel.self) { res in
-            ProgramModel(
-                compilerApi: res.provide(MoyaProvider<Compiler>.self),
-                storage: res.provide(Storage.self)
-            )
-        }
-        container.register(ProgramViewModel.self) { res in
-            ProgramViewModel(
-                program: res.provide(ProgramModel.self),
-                coordinator: coordinator
-            )
-        }
-        container.register(ProgramViewController.self) { res in
-            ProgramViewController(
-                viewModel: res.provide(ProgramViewModel.self)
-            )
-        }
-        container.register(ProgramRunModalViewController.self) { res in
-            ProgramRunModalViewController(
-                viewModel: res.provide(ProgramViewModel.self)
-            )
-        }
+        container
+            .record(ProgramModel.self) { res in
+                ProgramModel(
+                    compilerApi: res.provide(MoyaProvider<Compiler>.self),
+                    storage: res.provide(Storage.self)
+                )
+            }
+            .inObjectScope(.container)
+        container
+            .record(ProgramViewModel.self) { res in
+                ProgramViewModel(
+                    program: res.provide(ProgramModel.self),
+                    coordinator: coordinator
+                )
+            }
+            .inObjectScope(.container)
+        container
+            .record(ProgramViewController.self) { res in
+                ProgramViewController(
+                    viewModel: res.provide(ProgramViewModel.self)
+                )
+            }
+            .inObjectScope(.container)
+        container
+            .record(ProgramRunModalViewController.self) { res in
+                ProgramRunModalViewController(
+                    viewModel: res.provide(ProgramViewModel.self)
+                )
+            }
+            .inObjectScope(.container)
     }
     
     func initCoordinator(_ coordinator: Coordinator) {
@@ -91,14 +99,20 @@ class AppContainer {
         coordinator.programModalViewController =
             container.provide(ProgramRunModalViewController.self)
     }
-    
-//    func provide<Service>(_ serviceType: Service.Type) -> Service {
-//        container.provide(serviceType)
-//    }
 }
 
 extension Resolver {
-    func provide<Service>(_ serviceType: Service.Type) -> Service {
-        resolve(serviceType, name: nil)!
+    func provide<Service>(_ serviceType: Service.Type, name: String? = nil) -> Service {
+        resolve(serviceType, name: name ?? "default")!
+    }
+}
+
+extension Container {
+    func record<Service>(
+        _ serviceType: Service.Type,
+        name: String? = nil,
+        factory: @escaping (Resolver) -> Service
+    ) -> ServiceEntry<Service> {
+        register(serviceType, name: name ?? "default", factory: factory)
     }
 }

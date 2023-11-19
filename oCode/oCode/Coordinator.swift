@@ -25,7 +25,7 @@ class Coordinator {
         navigationController?.show(viewController, sender: self)
     }
     
-    func openProgram(withId id: ObjectIdentifier) {
+    func openProgram(withId id: Int) {
         guard let viewController = programViewController else {
             return
         }
@@ -40,9 +40,10 @@ class Coordinator {
         guard let viewController = programModalViewController else {
             return
         }
-        viewController.modalPresentationStyle = .pageSheet
+        let navigatedView = UINavigationController(rootViewController: viewController)
+        navigatedView.modalPresentationStyle = .pageSheet
         navigationController?.present(
-            viewController,
+            navigatedView,
             animated: true
         )
     }

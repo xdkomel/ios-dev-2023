@@ -23,6 +23,8 @@ struct HomeScreenModel {
     }
     
     mutating func refreshPrograms() {
-        programs = storage.load()
+        programs = storage.load()?.sorted { program1, program2 in
+            program1.name < program2.name
+        }
     }
 }

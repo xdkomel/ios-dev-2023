@@ -10,80 +10,18 @@ import Combine
 import Moya
 import UIKit
 import HighlightSwift
-
-//enum OutputState {
-//    case empty
-//    case oldEmpty(oldResult: String)
-//    case loading
-//    case error(description: String)
-//    case data(output: String)
-//}
+import SwiftUI
 
 final class ProgramViewModel {
-    @Published var program: ProgramModel
+    @ObservedObject var program: ProgramModel
     let coordinator: Coordinator
-//    @Published var name: String
-//    @Published var code: String
-//    @Published var target: TargetLanguage
-//    @Published var input: String?
-//    @Published var output: OutputState
-//    private let compilerApi: MoyaProvider<Compiler>
     
-    init(
-        program: ProgramModel,
-        coordinator: Coordinator
-//        compilerApi: MoyaProvider<Compiler>,
-//        name: String,
-//        code: String,
-//        target: TargetLanguage,
-//        input: String? = nil,
-//        output: OutputState = .empty
-    ) {
+    init(program: ProgramModel, coordinator: Coordinator) {
         self.program = program
         self.coordinator = coordinator
-//        self.compilerApi = compilerApi
-//        self.name = name
-//        self.code = code
-//        self.target = target
-//        self.input = input
-//        self.output = output
     }
     
-//    init(compilerApi: MoyaProvider<Compiler>) {
-//        self.compilerApi = compilerApi
-//        name = "Program \(Int.random(in: 1...1000))"
-//        code = "print(int(input()))"
-//        target = .init(compilerName: "py", fullName: "Python")
-//        input = nil
-//        output = .empty
-//    }
-//    
-//    func update(
-//        name: String? = nil,
-//        code: String? = nil,
-//        target: TargetLanguage? = nil,
-//        input: String? = nil,
-//        output: OutputState = .empty
-//    ) {
-//        self.name = name ?? self.name
-//        self.code = code ?? self.code
-//        self.target = target ?? self.target
-//        self.input = input ?? self.input
-//        self.output = switch output {
-//        case .empty: self.output
-//        default: output
-//        }
-//    }
-//    
-//    func setDefault() {
-//        name = "Program \(Int.random(in: 1...1000))"
-//        code = "print(int(input()))"
-//        target = .init(compilerName: "py", fullName: "Python")
-//        input = nil
-//        output = .empty
-//    }
-    
-    func loadProgram(withId id: ObjectIdentifier) {
+    func loadProgram(withId id: Int) {
         program.loadProgram(withId: id)
     }
     
@@ -132,5 +70,9 @@ final class ProgramViewModel {
     func closeRunModal(withOutput output: OutputState) {
         coordinator.closeProgramModal()
         program.updateOutput(output)
+    }
+    
+    func save() {
+        program.save()
     }
 }
