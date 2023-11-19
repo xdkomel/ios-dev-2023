@@ -8,23 +8,17 @@
 import Foundation
 import UIKit
 import CoreData
+import Combine
 
 class HomeScreenViewController: UIViewController {
-    private let storage: Storage
-    private let programViewController: ProgramViewController
-    private let programViewModel: ProgramViewModel
+    private let viewModel: HomeScreenViewModel
+    private var bindings = Set<AnyCancellable>()
     private let list = ListController()
     private let label = UILabel()
     private let button = UIButton()
     
-    init(
-        storage: Storage,
-        programViewController: ProgramViewController,
-        programViewModel: ProgramViewModel
-    ) {
-        self.storage = storage
-        self.programViewController = programViewController
-        self.programViewModel = programViewModel
+    init(homeScreenViewModel: HomeScreenViewModel) {
+        viewModel = homeScreenViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,6 +30,8 @@ class HomeScreenViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
+        viewModel.refreshPrograms()
+        setBindings()
     }
     
     override func viewDidLoad() {
@@ -52,17 +48,12 @@ class HomeScreenViewController: UIViewController {
         )
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        updateScreen()
-        super.viewDidAppear(animated)
-    }
-    
-    func updateScreen() {
+    func updateScreen(optionalPrograms: [ProgramData]?) {
         view.subviews.forEach {
             $0.removeFromSuperview()
             $0.removeConstraints($0.constraints)
         }
-        if let programs = storage.load() {
+        if let programs = optionalPrograms {
             if programs.isEmpty {
                 setInitialView()
             } else {
@@ -71,6 +62,14 @@ class HomeScreenViewController: UIViewController {
         } else {
             setErrorView()
         }
+    }
+    
+    func setBindings() {
+        viewModel.$model
+            .sink { [weak self] model in
+                self?.updateScreen(optionalPrograms: model.programs)
+            }
+            .store(in: &bindings)
     }
     
     func setErrorView() {
@@ -107,7 +106,7 @@ class HomeScreenViewController: UIViewController {
         }
     }
     
-    func setListView(_ programs: [ProgramDataModel]) {
+    func setListView(_ programs: [ProgramData]) {
         self.navigationItem.rightBarButtonItem = .init(
             title: NSLocalizedString("homescreen.new-button", comment: ""),
             style: .done,
@@ -126,42 +125,11 @@ class HomeScreenViewController: UIViewController {
         }
     }
     
-    func openProgram(_ program: ProgramDataModel) {
-        programViewModel.update(
-            name: program.name,
-            code: program.code,
-            target: program.language?.tag != nil && program.language?.fullName != nil ?
-                .init(
-                    compilerName: program.language!.tag!,
-                    fullName: program.language!.fullName!
-                ) :
-                nil,
-            input: program.input,
-            output: program.output == nil ?
-                .empty :
-                .oldEmpty(oldResult: program.output!)
-        )
-        programViewController.onClose = { [weak self] in
-            program.name = self?.programViewModel.name
-            program.code = self?.programViewModel.code
-            program.language?.fullName = self?.programViewModel.target.fullName
-            program.language?.tag = self?.programViewModel.target.compilerName
-            program.input = self?.programViewModel.input
-            program.output = switch self?.programViewModel.output {
-            case .oldEmpty(let oldResult): oldResult
-            case .data(let output): output
-            default: nil
-            }
-            self?.storage.save()
-            self?.programViewModel.setDefault()
-        }
-        navigationController?.pushViewController(
-            programViewController,
-            animated: true
-        )
+    func openProgram(_ program: ProgramData) {
+        viewModel.openProgram(withId: program.id)
     }
     
     @objc func createNewProgram() {
-        openProgram(storage.newProgram())
+        openProgram(viewModel.newProgram)
     }
 }

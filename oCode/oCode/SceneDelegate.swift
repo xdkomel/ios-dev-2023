@@ -6,61 +6,26 @@
 //
 
 import UIKit
-import Swinject
-import Moya
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    let container = {
-        let container = Container()
-        container.register(Storage.self) { _ in
-            Storage(
-                (UIApplication.shared.delegate as! AppDelegate)
-                    .persistentContainer
-                    .viewContext
-            )
-        }
-        container.register(MoyaProvider<Compiler>.self) { _ in
-            MoyaProvider<Compiler>()
-        }
-        container.register(ProgramViewModel.self) { ref in
-            ProgramViewModel(
-                compilerApi: ref.resolve(MoyaProvider<Compiler>.self)!
-            )
-        }
-        container.register(HomeScreenViewController.self) { ref in
-            HomeScreenViewController(
-                storage: ref.resolve(Storage.self)!,
-                programViewController: ref.resolve(ProgramViewController.self)!,
-                programViewModel: ref.resolve(ProgramViewModel.self)!
-            )
-        }
-        container.register(ProgramViewController.self) { ref in
-            ProgramViewController(
-                viewModel: ref.resolve(ProgramViewModel.self)!,
-                programRunModal: ref.resolve(ProgramRunModalViewController.self)!
-            )
-        }
-        container.register(ProgramRunModalViewController.self) { ref in
-            ProgramRunModalViewController(
-                viewModel: ref.resolve(ProgramViewModel.self)!
-            )
-        }
-        return container
-    }()
-
+    let container = AppContainer()
+    var coordinator: Coordinator?
+    
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UINavigationController(
-            rootViewController: container.resolve(HomeScreenViewController.self)!
-        )
+        let navigation = UINavigationController()
+        window.rootViewController = navigation
         self.window = window
+        coordinator = Coordinator(with: navigation)
+        container.coordinator = coordinator
+        container.build()
+        coordinator?.start()
         window.makeKeyAndVisible()
     }
 

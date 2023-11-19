@@ -43,7 +43,7 @@ class ProgramRunModalViewController: UIViewController {
         )
         inputField.textAlignment = .center
         inputField.borderStyle = .roundedRect
-        inputField.text = viewModel.input
+        inputField.text = viewModel.program.programData?.input
         outputText.textAlignment = .center
         outputText.numberOfLines = 3
         setView()
@@ -68,23 +68,26 @@ class ProgramRunModalViewController: UIViewController {
     private func setBinding() {
         // View -> ViewModel
         inputField.textPublisher
-            .prepend([viewModel.input ?? inputField.text ?? ""])
+            .prepend([viewModel.program.programData?.input ?? inputField.text ?? ""])
             .receive(on: RunLoop.main)
             .sink { [weak self] text in
-                self?.viewModel.input = text
+                self?.viewModel.program.programData?.input = text
+            }
+            .store(in: &subscriptions)
+        
+        inputField.textPublisher
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.viewModel.save()
             }
             .store(in: &subscriptions)
         
         // ViewModel -> View
-        viewModel.$output
-            .receive(on: RunLoop.main)
-            .sink { [ weak self ] output in
-                switch output {
+        viewModel.program.$programData
+            .sink { [weak self] program in
+                switch program?.output {
                 case let .oldEmpty(oldResult):
                     self?.outputText.text = "\(NSLocalizedString("program.last-output", comment: "")) \(self?.filterOutput(oldResult) ?? oldResult)"
-                    self?.outputText.textColor = .secondaryLabel
-                case .empty:
-                    self?.outputText.text = NSLocalizedString("program.enter-input", comment: "")
                     self?.outputText.textColor = .secondaryLabel
                 case .loading:
                     self?.outputText.text = NSLocalizedString("program.loading", comment: "")
@@ -95,6 +98,10 @@ class ProgramRunModalViewController: UIViewController {
                 case let .data(output):
                     self?.outputText.text = self?.filterOutput(output) ?? output
                     self?.outputText.textColor = .label
+                default:
+                    // .empty + when programData is nil
+                    self?.outputText.text = NSLocalizedString("program.enter-input", comment: "")
+                    self?.outputText.textColor = .secondaryLabel
                 }
             }
             .store(in: &subscriptions)
@@ -111,12 +118,12 @@ class ProgramRunModalViewController: UIViewController {
     }
     
     @objc private func close() {
-        dismiss(animated: true)
-        viewModel.output = switch viewModel.output {
+        let outputToStore: OutputState = switch viewModel.program.programData?.output {
         case let .oldEmpty(oldResult): .oldEmpty(oldResult: oldResult)
         case let .data(output): .oldEmpty(oldResult: output)
         default: .empty
         }
+        viewModel.closeRunModal(withOutput: outputToStore)
     }
 }
 

@@ -14,6 +14,11 @@
 		8E4DD74B2B010D8C00EF9FEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD74A2B010D8C00EF9FEB /* Storage.swift */; };
 		8E4DD74D2B015D7B00EF9FEB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DD74A2B010D8C00EF9FEB /* Storage.swift */; };
 		8E4DD7522B018E5C00EF9FEB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DD7512B018E5C00EF9FEB /* Localizable.xcstrings */; };
+		8E66F4132B062AAC007EC880 /* HomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66F4122B062AAC007EC880 /* HomeScreenViewModel.swift */; };
+		8EC769E02B081A1B00ABC00C /* HomeScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769DF2B081A1B00ABC00C /* HomeScreenModel.swift */; };
+		8EC769E22B081DDD00ABC00C /* ProgramModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E12B081DDD00ABC00C /* ProgramModel.swift */; };
+		8EC769E42B0965E000ABC00C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E32B0965E000ABC00C /* Coordinator.swift */; };
+		8EC769E62B097A4700ABC00C /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC769E52B097A4700ABC00C /* AppContainer.swift */; };
 		8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B482AFBC68E0042A87F /* AppDelegate.swift */; };
 		8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */; };
 		8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */; };
@@ -26,7 +31,6 @@
 		8EE41B842AFC2EEA0042A87F /* CompilerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B832AFC2EEA0042A87F /* CompilerApi.swift */; };
 		8EE41B852AFC2EEA0042A87F /* CompilerApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B832AFC2EEA0042A87F /* CompilerApi.swift */; };
 		8EE41B872AFC49070042A87F /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B862AFC49070042A87F /* ProgramViewModel.swift */; };
-		8EE41B882AFC49070042A87F /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B862AFC49070042A87F /* ProgramViewModel.swift */; };
 		8EE41B8A2AFD47010042A87F /* ProgramOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B892AFD47000042A87F /* ProgramOutput.swift */; };
 		8EE41B8B2AFD47010042A87F /* ProgramOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B892AFD47000042A87F /* ProgramOutput.swift */; };
 		8EE41B8D2AFD479F0042A87F /* SupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE41B8C2AFD479F0042A87F /* SupportedLanguages.swift */; };
@@ -63,6 +67,11 @@
 		8E4DD7482B00DDDD00EF9FEB /* ProgramRunModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramRunModalViewController.swift; sourceTree = "<group>"; };
 		8E4DD74A2B010D8C00EF9FEB /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8E4DD7512B018E5C00EF9FEB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8E66F4122B062AAC007EC880 /* HomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewModel.swift; sourceTree = "<group>"; };
+		8EC769DF2B081A1B00ABC00C /* HomeScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenModel.swift; sourceTree = "<group>"; };
+		8EC769E12B081DDD00ABC00C /* ProgramModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramModel.swift; sourceTree = "<group>"; };
+		8EC769E32B0965E000ABC00C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		8EC769E52B097A4700ABC00C /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		8EE41B452AFBC68E0042A87F /* oCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE41B482AFBC68E0042A87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,23 +135,15 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		8E4DD74E2B015D8C00EF9FEB /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				8EE41B8F2AFD4FE30042A87F /* HomeScreenViewController.swift */,
-				8E4DD7482B00DDDD00EF9FEB /* ProgramRunModalViewController.swift */,
-				8E4DD7432B000CFD00EF9FEB /* ListController.swift */,
-				8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		8E4DD74F2B015DD600EF9FEB /* ViewModels */ = {
+		8E4DD74E2B015D8C00EF9FEB /* Program */ = {
 			isa = PBXGroup;
 			children = (
 				8EE41B862AFC49070042A87F /* ProgramViewModel.swift */,
+				8E4DD7482B00DDDD00EF9FEB /* ProgramRunModalViewController.swift */,
+				8EE41B4C2AFBC68E0042A87F /* ProgramViewController.swift */,
+				8EC769E12B081DDD00ABC00C /* ProgramModel.swift */,
 			);
-			path = ViewModels;
+			path = Program;
 			sourceTree = "<group>";
 		};
 		8E4DD7502B015DF000EF9FEB /* Models */ = {
@@ -152,6 +153,17 @@
 				8EE41B892AFD47000042A87F /* ProgramOutput.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		8E66F4112B062A63007EC880 /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8E4DD7432B000CFD00EF9FEB /* ListController.swift */,
+				8EE41B8F2AFD4FE30042A87F /* HomeScreenViewController.swift */,
+				8E66F4122B062AAC007EC880 /* HomeScreenViewModel.swift */,
+				8EC769DF2B081A1B00ABC00C /* HomeScreenModel.swift */,
+			);
+			path = HomeScreen;
 			sourceTree = "<group>";
 		};
 		8EE41B3C2AFBC68E0042A87F = {
@@ -180,8 +192,8 @@
 		8EE41B472AFBC68E0042A87F /* oCode */ = {
 			isa = PBXGroup;
 			children = (
-				8E4DD74F2B015DD600EF9FEB /* ViewModels */,
-				8E4DD74E2B015D8C00EF9FEB /* ViewControllers */,
+				8E66F4112B062A63007EC880 /* HomeScreen */,
+				8E4DD74E2B015D8C00EF9FEB /* Program */,
 				8E4DD74C2B015D6B00EF9FEB /* Data */,
 				8EE41B482AFBC68E0042A87F /* AppDelegate.swift */,
 				8EE41B4A2AFBC68E0042A87F /* SceneDelegate.swift */,
@@ -189,6 +201,8 @@
 				8EE41B562AFBC6900042A87F /* LaunchScreen.storyboard */,
 				8EE41B592AFBC6900042A87F /* Info.plist */,
 				8EE41B512AFBC68E0042A87F /* oCode.xcdatamodeld */,
+				8EC769E32B0965E000ABC00C /* Coordinator.swift */,
+				8EC769E52B097A4700ABC00C /* AppContainer.swift */,
 			);
 			path = oCode;
 			sourceTree = "<group>";
@@ -498,8 +512,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC769E42B0965E000ABC00C /* Coordinator.swift in Sources */,
 				8EE41B8D2AFD479F0042A87F /* SupportedLanguages.swift in Sources */,
 				8E4DD7442B000CFD00EF9FEB /* ListController.swift in Sources */,
+				8EC769E22B081DDD00ABC00C /* ProgramModel.swift in Sources */,
 				8EE41B532AFBC68E0042A87F /* oCode.xcdatamodeld in Sources */,
 				8E4DD7492B00DDDD00EF9FEB /* ProgramRunModalViewController.swift in Sources */,
 				8EE41B842AFC2EEA0042A87F /* CompilerApi.swift in Sources */,
@@ -507,9 +523,12 @@
 				8EE41B4D2AFBC68E0042A87F /* ProgramViewController.swift in Sources */,
 				8EE41B492AFBC68E0042A87F /* AppDelegate.swift in Sources */,
 				8EE41B902AFD4FE30042A87F /* HomeScreenViewController.swift in Sources */,
+				8E66F4132B062AAC007EC880 /* HomeScreenViewModel.swift in Sources */,
+				8EC769E02B081A1B00ABC00C /* HomeScreenModel.swift in Sources */,
 				8EE41B4B2AFBC68E0042A87F /* SceneDelegate.swift in Sources */,
 				8EE41B8A2AFD47010042A87F /* ProgramOutput.swift in Sources */,
 				8EE41B872AFC49070042A87F /* ProgramViewModel.swift in Sources */,
+				8EC769E62B097A4700ABC00C /* AppContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,7 +539,6 @@
 				8EE41B852AFC2EEA0042A87F /* CompilerApi.swift in Sources */,
 				8E4DD74D2B015D7B00EF9FEB /* Storage.swift in Sources */,
 				8EE41B632AFBC6900042A87F /* oCodeTests.swift in Sources */,
-				8EE41B882AFC49070042A87F /* ProgramViewModel.swift in Sources */,
 				8EE41B8B2AFD47010042A87F /* ProgramOutput.swift in Sources */,
 				8EE41B8E2AFD479F0042A87F /* SupportedLanguages.swift in Sources */,
 			);

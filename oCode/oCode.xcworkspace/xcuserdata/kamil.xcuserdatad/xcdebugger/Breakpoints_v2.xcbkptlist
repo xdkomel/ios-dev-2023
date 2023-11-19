@@ -7,79 +7,62 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "581353B5-8989-40EA-9D40-0A989ACAE1FB"
+            uuid = "9457EFA5-FE14-4C23-BD9D-645C9CA5838D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oCode/ViewControllers/ProgramViewController.swift"
+            filePath = "oCode/Program/ProgramModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "viewWillDisappear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CA7B93AA-6037-4190-9269-C29D9272B5AC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "oCode/ViewModels/ProgramViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "runCode()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "20E67F43-9293-4080-972E-4F1992A6839E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "oCode/ViewControllers/ProgramRunModalViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "setBinding()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
+                  uuid = "9457EFA5-FE14-4C23-BD9D-645C9CA5838D - 353ff7abb7cd629c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
+                  symbolName = "closure #1 (Swift.Result&lt;Moya.Response, Moya.MoyaError&gt;) -&gt; () in oCode.ProgramModel.runCode() -&gt; ()"
                   moduleName = "oCode"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/Program/ProgramModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "162">
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "204">
                </Location>
                <Location
-                  uuid = "20E67F43-9293-4080-972E-4F1992A6839E - a6c0ea2c5a770080"
+                  uuid = "9457EFA5-FE14-4C23-BD9D-645C9CA5838D - 353ff7abb7cd6394"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (oCode.OutputState) -&gt; () in oCode.ProgramRunModalViewController.setBinding() -&gt; ()"
+                  symbolName = "closure #1 (Swift.Result&lt;Moya.Response, Moya.MoyaError&gt;) -&gt; () in oCode.ProgramModel.runCode() -&gt; ()"
                   moduleName = "oCode"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/ViewControllers/ProgramRunModalViewController.swift"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/Program/ProgramModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "304">
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "262">
+               </Location>
+               <Location
+                  uuid = "9457EFA5-FE14-4C23-BD9D-645C9CA5838D - 353ff7abb7cd6394"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Moya.Response, Moya.MoyaError&gt;) -&gt; () in oCode.ProgramModel.runCode() -&gt; ()"
+                  moduleName = "oCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kamil/ios-dev-2023/oCode/oCode/Program/ProgramModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "283">
                </Location>
             </Locations>
          </BreakpointContent>
