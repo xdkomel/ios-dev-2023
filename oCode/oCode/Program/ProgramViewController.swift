@@ -71,20 +71,11 @@ class ProgramViewController: UIViewController {
     }
     
     func setAvailableTargets(_ targets: [String]) {
-//        self.targetSelector.setTitle(
-//            selectedName,
-////            viewModel.program.programData?.target.fullName ?? "Unknown",
-//            for: .normal
-//        )
-        
         self.targetSelector.menu = UIMenu(
             options: .displayInline,
             children: targets.map {
                 UIAction(title: $0.uppercased(), handler: viewModel.selectTarget)
             }
-//            children: viewModel.program.availableTargets.last().map { target in
-//                UIAction(title: target.fullName, handler: viewModel.selectTarget)
-//            }
         )
         self.navigationItem.rightBarButtonItems?.removeLast()
         self.navigationItem.rightBarButtonItems?.append(
