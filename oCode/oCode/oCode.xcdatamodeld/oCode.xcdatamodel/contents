@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="LanguageDataModel" representedClassName="LanguageDataModel" syncable="YES" codeGenerationType="class">
-        <attribute name="fullName" optional="YES" attributeType="String"/>
-        <attribute name="tag" optional="YES" attributeType="String"/>
-    </entity>
+    <entity name="LanguageDataModel" representedClassName="LanguageDataModel" syncable="YES" codeGenerationType="class"/>
     <entity name="ProgramDataModel" representedClassName="ProgramDataModel" syncable="YES" codeGenerationType="class">
         <attribute name="code" optional="YES" attributeType="String"/>
         <attribute name="input" optional="YES" attributeType="String"/>
+        <attribute name="language" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="output" optional="YES" attributeType="String"/>
-        <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LanguageDataModel"/>
     </entity>
 </model>

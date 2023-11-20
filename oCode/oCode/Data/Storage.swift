@@ -21,12 +21,7 @@ class Storage {
             id: dataModel.hash,
             name: dataModel.name ?? generatedProgramName,
             code: dataModel.code ?? defaultProgramCode,
-            target: dataModel.language?.fullName != nil && dataModel.language?.tag != nil ?
-                .init(
-                    compilerName: dataModel.language!.tag!,
-                    fullName: dataModel.language!.fullName!
-                ) :
-                defaultProgramTarget,
+            target: dataModel.language ?? defaultProgramLanguage,
             output: dataModel.output != nil ?
                 .oldEmpty(oldResult: dataModel.output!) :
                 .empty,
@@ -38,13 +33,7 @@ class Storage {
         "Program \(Int.random(in: 1...1000))"
     }
     let defaultProgramCode: String = "print(int(input()))"
-    let defaultProgramTarget: TargetLanguage = .init(compilerName: "py", fullName: "Python")
-    var defaultProgramLanguage: LanguageDataModel {
-        let data = LanguageDataModel(context: context)
-        data.fullName = "Python"
-        data.tag = "py"
-        return data
-    }
+    let defaultProgramLanguage: String = "py"
     
     func load() -> [ProgramData]? {
         do {
@@ -75,11 +64,13 @@ class Storage {
         return nil
     }
     
-    func viewToDataModel(viewProgram program: ProgramData, coreDataProgram data: ProgramDataModel) {
+    func viewToDataModel(
+        viewProgram program: ProgramData,
+        coreDataProgram data: ProgramDataModel
+    ) {
         data.name = program.name
         data.code = program.code
-        data.language?.fullName = program.target.fullName
-        data.language?.tag = program.target.compilerName
+        data.language = program.target
         data.output = switch program.output {
         case .data(let output): output
         case .oldEmpty(let oldResult): oldResult

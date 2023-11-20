@@ -13,7 +13,7 @@ struct ProgramData: Hashable {
     var id: Int
     var name: String
     var code: String
-    var target: TargetLanguage
+    var target: String
     var output: OutputState
     var input: String?
     
@@ -64,12 +64,23 @@ class ProgramModel {
         targetsManager.loadLanguages()
     }
     
-    var availableTargetsPublished: Published<[TargetLanguage]>.Publisher {
+    var availableTargetsPublished: Published<[String]>.Publisher {
         targetsManager.$supportedLanguages
     }
     
-    var lastAvailableTargets: [TargetLanguage] {
+    var lastAvailableTargets: [String] {
         targetsManager.supportedLanguages
+    }
+    
+    var targetChangePublished: AnyPublisher<Optional<String>, Never> {
+        $programData
+            .map { data in
+                data?.target
+            }
+            .removeDuplicates { lang1, lang2 in
+                lang1 == lang2
+            }
+            .eraseToAnyPublisher()
     }
     
     func runCode() {
@@ -84,7 +95,7 @@ class ProgramModel {
         compilerApi.request(
             .runCode(
                 code: program.code,
-                target: program.target.compilerName,
+                target: program.target,
                 input: program.input ?? "0"
             )
         ) { [weak self] result in

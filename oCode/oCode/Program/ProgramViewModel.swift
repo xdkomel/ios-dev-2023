@@ -81,6 +81,8 @@ final class ProgramViewModel {
     }
     
     func selectTarget(action: UIAction) {
-        print(action)
+        let language = action.title.lowercased()
+        print(language)
+        program.programData?.target = language
     }
 }

@@ -25,7 +25,7 @@ final class ListController: UICollectionViewController {
             .CellRegistration<UICollectionViewListCell, ProgramData> { cell, _, program in
                 var content = cell.defaultContentConfiguration()
                 content.text = program.name
-                content.secondaryText = program.target.fullName
+                content.secondaryText = program.target
                 content.secondaryTextProperties.color = .secondaryLabel
                 content.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .subheadline)
                 cell.contentConfiguration = content

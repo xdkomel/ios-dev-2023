@@ -44,6 +44,8 @@ class ProgramViewController: UIViewController {
 //        setTargetLanguage()
         self.targetSelector.showsMenuAsPrimaryAction = true
         self.targetSelector.changesSelectionAsPrimaryAction = true
+        self.targetSelector.isEnabled = true
+        self.targetSelector.setTitleColor(.systemBlue, for: .normal)
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(
                 title: NSLocalizedString("program.run-button", comment: ""),
@@ -68,20 +70,27 @@ class ProgramViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    func setTargetLanguage(selectedName: String, targets: [String]) {
-        self.targetSelector.setTitle(
-            selectedName,
-//            viewModel.program.programData?.target.fullName ?? "Unknown",
-            for: .normal
-        )
+    func setAvailableTargets(_ targets: [String]) {
+//        self.targetSelector.setTitle(
+//            selectedName,
+////            viewModel.program.programData?.target.fullName ?? "Unknown",
+//            for: .normal
+//        )
+        
         self.targetSelector.menu = UIMenu(
             options: .displayInline,
             children: targets.map {
-                UIAction(title: $0, handler: viewModel.selectTarget)
+                UIAction(title: $0.uppercased(), handler: viewModel.selectTarget)
             }
 //            children: viewModel.program.availableTargets.last().map { target in
 //                UIAction(title: target.fullName, handler: viewModel.selectTarget)
 //            }
+        )
+        self.navigationItem.rightBarButtonItems?.removeLast()
+        self.navigationItem.rightBarButtonItems?.append(
+            UIBarButtonItem(
+                customView: self.targetSelector
+            )
         )
     }
     
@@ -114,11 +123,16 @@ class ProgramViewController: UIViewController {
         viewModel.program.availableTargetsPublished
             .prepend([viewModel.program.lastAvailableTargets])
             .sink { [weak self] targets in
-                self?.setTargetLanguage(selectedName: "selected", targets: targets.map {
-                    $0.compilerName
-                })
+                self?.setAvailableTargets(targets)
             }
             .store(in: &subscriptions)
+        
+        // New target is selected
+//        viewModel.program.targetChangePublished
+//            .sink { [weak self] _ in
+////                self?.highlightExistingText()
+//            }
+//            .store(in: &subscriptions)
     }
     
     func highlightExistingText() {
@@ -135,7 +149,7 @@ class ProgramViewController: UIViewController {
                 .userInterfaceStyle == .dark ?
                     .dark(.google) :
                     .light(.google)
-            let compiler = viewModel.program.programData?.target.compilerName
+            let compiler = viewModel.program.programData?.target
             if let attributedString = await viewModel.highlightText(
                 text,
                 compilerName: compiler,
