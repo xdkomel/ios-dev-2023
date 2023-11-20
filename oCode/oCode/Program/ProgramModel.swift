@@ -102,6 +102,7 @@ class ProgramModel {
     
     func updateOutput(_ newOutput: OutputState) {
         programData?.output = newOutput
+        save()
     }
     
     func save() {

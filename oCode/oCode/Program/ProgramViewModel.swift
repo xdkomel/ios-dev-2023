@@ -35,6 +35,7 @@ final class ProgramViewModel {
         style: HighlightStyle
     ) async -> NSAttributedString? {
         let lastSymbol = text.last
+        let firstSymbol = text.first
         do {
             let highlighted = try await Highlight.text(
                 text,
@@ -51,10 +52,17 @@ final class ProgramViewModel {
                     ])
                 )
             )
-            attributedString.mutableString.append(
+            let mutableString = attributedString.mutableString
+            mutableString.append(
                 lastSymbol?.isWhitespace ?? false || lastSymbol?.isNewline ?? false ?
                     lastSymbol?.description ?? "" :
                     ""
+            )
+            mutableString.insert(
+                firstSymbol?.isWhitespace ?? false || firstSymbol?.isNewline ?? false ?
+                    firstSymbol?.description ?? "" :
+                     "",
+                at: 0
             )
             return attributedString
         } catch {
